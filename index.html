@@ -4,54 +4,103 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Warlock Winners | Sports Handicapping</title>
-  <meta name="description" content="Warlock Winners: researched sports picks, a transparent record, and disciplined bankroll advice.">
+  <meta name="description" content="Warlock Winners: researched sports picks with Vegas-style confidence and disciplined bankroll advice.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&family=Monoton&display=swap" rel="stylesheet">
   <style>
-    :root { --bg: #0f0b1a; --panel: #1b1430; --text: #ece8f5; --muted: #a59cbf; --accent: #9b5cff; --gold: #f5c542; }
+    :root {
+      --bg: #07060b; --panel: #121019; --line: #2a2533; --text: #f4f1f8; --muted: #a49cb3;
+      --gold: #f7c948; --gold2: #b8860b; --pink: #ff2e88; --cyan: #22e3ff; --green: #39ff88; --red: #ff5a5a;
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
     a { color: var(--gold); }
-    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
-    header { position: sticky; top: 0; background: rgba(15,11,26,.92); backdrop-filter: blur(6px); border-bottom: 1px solid #2a2145; z-index: 10; }
-    nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: .5px; text-decoration: none; color: var(--text); }
-    .logo span { color: var(--accent); }
-    nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
-    nav ul a { color: var(--muted); text-decoration: none; }
-    nav ul a:hover, nav ul a:focus { color: var(--text); }
-    .hero { padding: 96px 0 72px; text-align: center; background: radial-gradient(ellipse at top, #2c1a55 0%, var(--bg) 70%); }
-    .hero h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); margin: 0 0 12px; line-height: 1.1; }
-    .hero p { color: var(--muted); font-size: 1.15rem; max-width: 620px; margin: 0 auto 28px; }
-    .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 26px; border-radius: 8px; text-decoration: none; font-weight: 700; }
-    .btn.alt { background: transparent; border: 2px solid var(--accent); margin-left: 10px; }
-    section { padding: 72px 0; }
-    h2 { font-size: 2rem; margin: 0 0 8px; text-align: center; }
-    .sub { color: var(--muted); text-align: center; margin: 0 0 40px; }
-    .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    .card { background: var(--panel); border: 1px solid #2a2145; border-radius: 12px; padding: 26px; }
-    .card h3 { margin-top: 0; }
-    .price { font-size: 2.2rem; font-weight: 800; color: var(--gold); }
-    .price small { font-size: 1rem; color: var(--muted); font-weight: 400; }
-    .card ul { padding-left: 18px; color: var(--muted); }
-    .featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-    .stats { text-align: center; }
-    .stats .num { font-size: 2.4rem; font-weight: 800; color: var(--gold); }
-    table { width: 100%; border-collapse: collapse; margin-top: 30px; background: var(--panel); border-radius: 12px; overflow: hidden; }
-    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #2a2145; }
-    th { color: var(--muted); font-weight: 600; }
-    .win { color: #4ade80; font-weight: 700; } .loss { color: #f87171; font-weight: 700; }
-    .alt-bg { background: #140f24; }
-    footer { padding: 40px 0; color: var(--muted); font-size: .9rem; border-top: 1px solid #2a2145; }
-    .disclaimer { background: var(--panel); border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 6px; margin-bottom: 20px; }
-    @media (max-width: 640px) { nav ul { display: none; } .btn.alt { margin: 12px 0 0; } }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 22px; }
+    h1, h2, h3 { font-family: "Bebas Neue", Impact, sans-serif; letter-spacing: 1.5px; font-weight: 400; }
+
+    /* header */
+    header { position: sticky; top: 0; z-index: 10; background: rgba(7,6,11,.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .logo { font-family: Monoton, cursive; font-size: 1.5rem; color: var(--pink); text-decoration: none;
+      text-shadow: 0 0 6px var(--pink), 0 0 18px var(--pink); }
+    nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+    nav ul a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .9rem; text-transform: uppercase; letter-spacing: 1px; }
+    nav ul a:hover, nav ul a:focus { color: var(--gold); }
+
+    /* hero */
+    .hero { position: relative; padding: 110px 0 90px; text-align: center; overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,46,136,.25), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(34,227,255,.18), transparent 45%),
+        radial-gradient(ellipse at bottom, rgba(247,201,72,.12), transparent 60%); }
+    .suits { position: absolute; inset: 0; font-size: 7rem; opacity: .05; pointer-events: none; }
+    .suits span { position: absolute; }
+    .eyebrow { display: inline-block; border: 1px solid var(--gold); color: var(--gold); padding: 4px 14px; border-radius: 99px;
+      font-size: .8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 22px; }
+    .hero h1 { font-size: clamp(3rem, 9vw, 6.5rem); line-height: .95; margin: 0 0 18px; }
+    .neon { color: #fff; text-shadow: 0 0 4px #fff, 0 0 12px var(--cyan), 0 0 28px var(--cyan), 0 0 50px var(--cyan); }
+    .goldtxt { background: linear-gradient(180deg, #fff3c4, var(--gold) 45%, var(--gold2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p { color: var(--muted); font-size: 1.15rem; max-width: 620px; margin: 0 auto 34px; }
+    .btn { display: inline-block; padding: 14px 30px; border-radius: 10px; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: .9rem; }
+    .btn-gold { background: linear-gradient(180deg, #ffe17a, var(--gold) 50%, var(--gold2)); color: #1a1205; box-shadow: 0 0 24px rgba(247,201,72,.35); }
+    .btn-ghost { border: 2px solid var(--pink); color: #fff; margin-left: 12px; box-shadow: 0 0 14px rgba(255,46,136,.35) inset; }
+    .btn:hover { transform: translateY(-2px); }
+
+    /* marquee bulbs */
+    .marquee { height: 14px; background: radial-gradient(circle, var(--gold) 3px, transparent 4px) 0 50% / 22px 14px repeat-x; animation: chase 1s steps(2) infinite; }
+    @keyframes chase { to { background-position: 22px 50%; } }
+
+    section { padding: 90px 0; }
+    h2 { font-size: clamp(2.4rem, 5vw, 3.4rem); text-align: center; margin: 0; }
+    .sub { color: var(--muted); text-align: center; margin: 6px 0 46px; }
+    .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .card { background: linear-gradient(180deg, #17141f, var(--panel)); border: 1px solid var(--line); border-radius: 16px; padding: 30px; }
+    .card h3 { font-size: 1.8rem; margin: 0 0 6px; color: var(--gold); }
+    .step { font-family: "Bebas Neue"; font-size: 3rem; color: var(--pink); text-shadow: 0 0 12px var(--pink); line-height: 1; }
+
+    /* record */
+    .record { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .stats .card { text-align: center; border-color: rgba(247,201,72,.35); }
+    .num { font-family: "Bebas Neue"; font-size: 3.6rem; line-height: 1; color: var(--green); text-shadow: 0 0 16px rgba(57,255,136,.5); }
+    .label { color: var(--muted); text-transform: uppercase; letter-spacing: 2px; font-size: .8rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 34px; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: 1.5px; }
+    .w { color: var(--green); font-weight: 800; } .l { color: var(--red); font-weight: 800; }
+    .fine { color: var(--muted); font-size: .8rem; text-align: center; margin-top: 14px; }
+
+    /* packages */
+    .price { font-family: "Bebas Neue"; font-size: 3.4rem; line-height: 1; margin: 10px 0; }
+    .price small { font-family: Inter; font-size: .95rem; color: var(--muted); }
+    .card ul { list-style: none; padding: 0; margin: 0 0 26px; color: var(--muted); }
+    .card li { padding: 6px 0; } .card li::before { content: "♠ "; color: var(--gold); }
+    .featured { position: relative; border: 2px solid var(--gold); box-shadow: 0 0 40px rgba(247,201,72,.2); transform: scale(1.03); }
+    .tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--pink); color: #fff; font-size: .75rem;
+      font-weight: 800; padding: 4px 14px; border-radius: 99px; letter-spacing: 1.5px; text-transform: uppercase; box-shadow: 0 0 14px var(--pink); }
+
+    /* testimonials */
+    .quote { font-size: 1.05rem; } .quote::before { content: "“"; font-family: "Bebas Neue"; font-size: 4rem; color: var(--pink); line-height: .5; display: block; }
+    .who { margin-top: 16px; color: var(--gold); font-weight: 600; } .who span { color: var(--muted); font-weight: 400; }
+    .stars { color: var(--gold); letter-spacing: 3px; }
+
+    /* contact + footer */
+    .contact { text-align: center; background: radial-gradient(ellipse at center, rgba(255,46,136,.15), transparent 60%); }
+    footer { padding: 46px 0; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
+    .disclaimer { border: 1px solid var(--line); border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin-bottom: 20px; }
+
+    @media (max-width: 720px) { nav ul { display: none; } .btn-ghost { margin: 14px 0 0; } .featured { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .marquee { animation: none; } html { scroll-behavior: auto; } .btn:hover { transform: none; } }
   </style>
 </head>
 <body>
   <header>
     <nav class="wrap" aria-label="Main">
-      <a class="logo" href="#">Warlock<span>Winners</span></a>
+      <a class="logo" href="#">Warlock Winners</a>
       <ul>
         <li><a href="#how">How It Works</a></li>
-        <li><a href="#record">Record</a></li>
+        <li><a href="#record">Hot Streak</a></li>
         <li><a href="#packages">Packages</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -60,88 +109,109 @@
 
   <main>
     <section class="hero">
+      <div class="suits" aria-hidden="true"><span style="top:8%;left:6%">♠</span><span style="top:55%;left:12%">♦</span><span style="top:12%;right:8%">♥</span><span style="top:60%;right:5%">♣</span></div>
       <div class="wrap">
-        <h1>Picks with a little <span style="color:var(--accent)">magic</span>,<br>backed by math.</h1>
-        <p>Researched sports handicapping, a transparent track record, and disciplined bankroll advice, delivered before game time.</p>
-        <a class="btn" href="#packages">See Packages</a>
-        <a class="btn alt" href="#record">View Our Record</a>
+        <div class="eyebrow">Sports Handicapping</div>
+        <h1><span class="neon">Bet Like</span><br><span class="goldtxt">The House</span></h1>
+        <p>Sharp, researched picks delivered before the lines move. Vegas confidence, spreadsheet discipline.</p>
+        <a class="btn btn-gold" href="#packages">Get Today's Picks</a>
+        <a class="btn btn-ghost" href="#record">See The Streak</a>
       </div>
     </section>
+    <div class="marquee" aria-hidden="true"></div>
 
     <section id="how">
       <div class="wrap">
         <h2>How It Works</h2>
-        <p class="sub">Three steps from sign-up to game day.</p>
+        <p class="sub">From sign-up to cashing tickets in three moves.</p>
         <div class="grid">
-          <div class="card"><h3>1. Choose a package</h3><p>Pick a daily, weekly, or season pass for the sports you follow.</p></div>
-          <div class="card"><h3>2. Get the picks</h3><p>Picks arrive by email before lines move, with unit sizing and a short write-up.</p></div>
-          <div class="card"><h3>3. Bet with discipline</h3><p>Follow our unit system and bankroll guidance. Every result is posted, wins and losses.</p></div>
+          <div class="card"><div class="step">01</div><h3>Pick Your Pass</h3><p>Daily, weekly or full season, for the sports you follow.</p></div>
+          <div class="card"><div class="step">02</div><h3>Get The Card</h3><p>Picks hit your inbox before lines move, with unit sizing and a quick breakdown.</p></div>
+          <div class="card"><div class="step">03</div><h3>Play Disciplined</h3><p>Follow our unit system and bankroll plan. No chasing, no tilt.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="record" class="alt-bg">
+    <section id="record" class="record">
       <div class="wrap">
-        <h2>Track Record</h2>
-        <p class="sub">Every pick graded. No deleted losses.</p>
-        <!-- TODO: replace the sample numbers and rows below with real results -->
+        <h2 class="goldtxt">Hot Streak</h2>
+        <!-- TODO: set the real date range and numbers for the window you show -->
+        <p class="sub">Last 30 days · Oct 23 – Nov 21, 2026</p>
         <div class="grid stats">
-          <div class="card"><div class="num">0-0</div>Season Record</div>
-          <div class="card"><div class="num">0.0u</div>Units Won</div>
-          <div class="card"><div class="num">0%</div>ROI</div>
+          <div class="card"><div class="num">XX-XX</div><div class="label">Record</div></div>
+          <div class="card"><div class="num">+XX.Xu</div><div class="label">Units Won</div></div>
+          <div class="card"><div class="num">XX%</div><div class="label">ROI</div></div>
         </div>
         <table>
           <thead><tr><th>Date</th><th>Sport</th><th>Pick</th><th>Units</th><th>Result</th></tr></thead>
           <tbody>
-            <tr><td>Nov 20</td><td>NFL</td><td>Sample Team -3.5</td><td>2u</td><td class="win">W</td></tr>
-            <tr><td>Nov 19</td><td>NBA</td><td>Sample Team ML</td><td>1u</td><td class="loss">L</td></tr>
+            <tr><td>Nov 21</td><td>NFL</td><td>Your pick here</td><td>2u</td><td class="w">W</td></tr>
+            <tr><td>Nov 20</td><td>NBA</td><td>Your pick here</td><td>1u</td><td class="w">W</td></tr>
           </tbody>
         </table>
+        <p class="fine">Results shown are for the dates above only. Past results do not guarantee future results.</p>
       </div>
     </section>
 
     <section id="packages">
       <div class="wrap">
         <h2>Packages</h2>
-        <p class="sub">Simple pricing. Cancel anytime.</p>
-        <!-- TODO: set real prices and wire each button to your payment link (Stripe, Square, etc.) -->
+        <p class="sub">Pick your seat at the table. Cancel anytime.</p>
+        <!-- TODO: set real prices and point each button at your payment link -->
         <div class="grid">
           <div class="card">
             <h3>Daily Card</h3>
             <div class="price">$XX <small>/ day</small></div>
             <ul><li>All of today's picks</li><li>Unit sizing</li><li>Email delivery</li></ul>
-            <a class="btn" href="#contact">Get Today's Picks</a>
+            <a class="btn btn-ghost" style="margin:0" href="#contact">Get Today</a>
           </div>
           <div class="card featured">
+            <div class="tag">Most Popular</div>
             <h3>Weekly Pass</h3>
             <div class="price">$XX <small>/ week</small></div>
-            <ul><li>Every pick for 7 days</li><li>Write-ups and reasoning</li><li>Priority email support</li></ul>
-            <a class="btn" href="#contact">Start Weekly</a>
+            <ul><li>Every pick for 7 days</li><li>Full breakdowns</li><li>Priority email support</li></ul>
+            <a class="btn btn-gold" href="#contact">Start Weekly</a>
           </div>
           <div class="card">
             <h3>Season Pass</h3>
             <div class="price">$XXX <small>/ season</small></div>
             <ul><li>Full-season access</li><li>Bankroll plan</li><li>Best value</li></ul>
-            <a class="btn" href="#contact">Go All Season</a>
+            <a class="btn btn-ghost" style="margin:0" href="#contact">Go All Season</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="alt-bg">
-      <div class="wrap" style="text-align:center">
-        <h2>Contact</h2>
-        <p class="sub">Questions or ready to join? Email us.</p>
-        <!-- TODO: confirm this is your Google Workspace address -->
-        <a class="btn" href="mailto:picks@warlockwinners.com">picks@warlockwinners.com</a>
+    <!-- Draft testimonials: hidden on the live site until replaced with real customer quotes (fake reviews violate the FTC rule).
+         Preview them by adding ?preview to the URL. Remove the `hidden` attribute once these are real. -->
+    <section id="testimonials" class="record" hidden>
+      <div class="wrap">
+        <h2>From The Table</h2>
+        <p class="sub">What members are saying.</p>
+        <div class="grid">
+          <div class="card"><div class="stars">★★★★★</div><p class="quote">I used to bet on gut feel. The unit sizing alone changed how I play. Finally up for the month instead of chasing Sunday night.</p><div class="who">Marcus T. <span>· Henderson, NV</span></div></div>
+          <div class="card"><div class="stars">★★★★★</div><p class="quote">Picks land early, the write-ups are short and actually explain the angle. Weekly pass paid for itself in the first few days.</p><div class="who">Danielle R. <span>· Phoenix, AZ</span></div></div>
+          <div class="card"><div class="stars">★★★★☆</div><p class="quote">Not every night is a winner, but they're upfront about it and the bankroll plan keeps me from doing anything dumb.</p><div class="who">Kevin L. <span>· Chicago, IL</span></div></div>
+        </div>
+      </div>
+    </section>
+    <script>if (location.search.includes('preview')) document.getElementById('testimonials').hidden = false;</script>
+
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <h2 class="neon">Ready To Play?</h2>
+        <p class="sub">Questions, or ready to join? Hit us up.</p>
+        <a class="btn btn-gold" href="mailto:BettingSzn@warlockwinners.com">BettingSzn@warlockwinners.com</a>
       </div>
     </section>
   </main>
 
+  <div class="marquee" aria-hidden="true"></div>
   <footer>
     <div class="wrap">
       <div class="disclaimer">
-        <strong>For entertainment purposes only. Must be 21+.</strong> No outcome is guaranteed and past results do not predict future results. Bet only what you can afford to lose and check that sports betting is legal where you live.
+        <strong>For entertainment purposes only. Must be 21+.</strong> No outcome is guaranteed and past results do not predict future results.
+        Bet only what you can afford to lose and check that sports betting is legal where you live.
         Gambling problem? Call or text <strong>1-800-GAMBLER</strong>.
       </div>
       &copy; 2026 Warlock Winners. All rights reserved.
