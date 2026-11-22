@@ -29,7 +29,7 @@ Day to day:
 ### Roster backup (private repo)
 The roster has subscriber names and Telegram IDs. **Never put it in this repo: this repo is public, including every branch.** Keep it in a separate private repo instead:
 1. On GitHub, create a new repo named `warlockwinners-roster` and set it to **Private**.
-2. Clone it next to this folder: `git clone https://github.com/hapakolea/warlockwinners-roster.git ../warlockwinners-roster`
-3. Point the script at it: `export SUBS_DB=../warlockwinners-roster/subscribers.json` (use the full path in cron).
+2. Clone it into your home folder: `git clone https://github.com/hapakolea/warlockwinners-roster.git ~/warlockwinners-roster`
+3. Point the script at it: `export SUBS_DB=~/warlockwinners-roster/subscribers.json` (add this line to `~/.zshrc` so it sticks; in cron use the full `/Users/<you>/...` path).
 
 After that, every command commits and pushes the roster to the private repo automatically. If a push fails (for example, you're offline), the script warns you and keeps the local copy, and the next successful run pushes the change. Before adding anyone as a collaborator on that repo, remember they'll see every subscriber.
