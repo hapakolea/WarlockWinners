@@ -51,8 +51,11 @@ def push_roster(msg):
     git = lambda *a: subprocess.run(["git", "-C", d, *a], capture_output=True, text=True)
     git("add", os.path.basename(DB))
     if git("diff", "--cached", "--quiet").returncode:  # only commit when the roster changed
-        git("commit", "-m", msg)
-        r = git("push")
+        c = git("commit", "-m", msg)
+        if c.returncode:
+            print(f"warning: roster saved locally but not backed up; git commit failed: {(c.stderr or c.stdout).strip()}")
+            return
+        r = git("push", "-u", "origin", "HEAD")  # -u/HEAD: first push into an empty repo has no upstream yet
         if r.returncode:
             print(f"warning: roster saved locally but push failed: {r.stderr.strip()}")
 
