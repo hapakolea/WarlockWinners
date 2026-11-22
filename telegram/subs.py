@@ -91,6 +91,9 @@ def kick(db, chat, name):
 def main(argv):
     if not argv or argv[0] not in ("add", "remove", "expire", "list", "sync"):
         sys.exit(__doc__)
+    missing = [v for v in ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHANNEL_ID") if not os.environ.get(v)]
+    if missing:
+        sys.exit(f"Set {' and '.join(missing)} first (see README: Telegram subscribers).")
     chat = os.environ["TELEGRAM_CHANNEL_ID"]
     db = load()
     sync(db, chat)
