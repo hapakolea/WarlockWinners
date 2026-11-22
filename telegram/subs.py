@@ -21,12 +21,14 @@ LINK_VALID_DAYS = 7  # how long an unused invite link stays valid
 
 
 def api(method, **params):
-    url = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/{method}"
+    url = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN'].strip()}/{method}"
     data = urllib.parse.urlencode({k: json.dumps(v) if isinstance(v, (list, bool)) else v for k, v in params.items()}).encode()
     try:
         with urllib.request.urlopen(url, data, timeout=30) as r:
             return json.load(r)["result"]
     except urllib.error.HTTPError as e:
+        if e.code in (401, 404):  # Telegram answers 404 for a malformed token, 401 for a revoked one
+            sys.exit("Telegram rejected TELEGRAM_BOT_TOKEN. Copy it again from @BotFather (/mybots > your bot > API Token); it looks like 123456789:AAH...")
         sys.exit(f"Telegram {method} failed: {json.load(e).get('description')}")
 
 
@@ -97,7 +99,7 @@ def main(argv):
     missing = [v for v in ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHANNEL_ID") if not os.environ.get(v)]
     if missing:
         sys.exit(f"Set {' and '.join(missing)} first (see README: Telegram subscribers).")
-    chat = os.environ["TELEGRAM_CHANNEL_ID"]
+    chat = os.environ["TELEGRAM_CHANNEL_ID"].strip()
     db = load()
     sync(db, chat)
     save(db)
