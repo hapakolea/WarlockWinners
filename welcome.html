@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to VIP | Warlock Winners</title>
+  <!-- Post-checkout page (Whop redirect). Kept out of search results. -->
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&family=Monoton&display=swap" rel="stylesheet">
+  <style>
+    /* shortcut: copies the main page's colors/buttons instead of a shared CSS file; move to one stylesheet if more pages are added */
+    :root { --bg: #07060b; --panel: #121019; --line: #2a2533; --text: #f4f1f8; --muted: #a49cb3; --gold: #f7c948; --gold2: #b8860b; --pink: #ff2e88; --cyan: #22e3ff; --green: #39ff88; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6;
+      background-image: radial-gradient(circle at 15% 10%, rgba(255,46,136,.2), transparent 40%), radial-gradient(circle at 85% 30%, rgba(34,227,255,.14), transparent 45%); background-repeat: no-repeat; }
+    a { color: var(--gold); }
+    :focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 22px; }
+    header { padding: 22px 0; }
+    .logo { font-family: Monoton, cursive; font-size: 1.4rem; color: var(--pink); text-decoration: none; white-space: nowrap; text-shadow: 0 0 6px var(--pink), 0 0 18px var(--pink); }
+    .marquee { height: 14px; background: radial-gradient(circle, var(--gold) 3px, transparent 4px) 0 50% / 22px 14px repeat-x; }
+    h1, h2 { font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; letter-spacing: 1.5px; }
+    .hero { text-align: center; padding: 40px 0 10px; }
+    .check { width: 74px; height: 74px; border-radius: 50%; margin: 0 auto 18px; display: grid; place-items: center; font-size: 2.2rem; font-weight: 800;
+      color: #07060b; background: var(--green); box-shadow: 0 0 30px rgba(57,255,136,.5); }
+    h1 { font-size: clamp(2.8rem, 9vw, 4.6rem); line-height: .95; margin: 0 0 14px; }
+    .neon { color: #fff; text-shadow: 0 0 4px #fff, 0 0 12px var(--cyan), 0 0 28px var(--cyan); }
+    .goldtxt { background: linear-gradient(180deg, #fff3c4, var(--gold) 45%, var(--gold2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { color: var(--muted); font-size: 1.1rem; margin: 0 auto; max-width: 560px; }
+    .steps { list-style: none; padding: 0; margin: 40px 0; display: grid; gap: 16px; }
+    .steps li { display: grid; grid-template-columns: 56px 1fr; gap: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+    .steps li.main { border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(247,201,72,.15); }
+    .n { font-family: "Bebas Neue"; font-size: 2.6rem; line-height: 1; color: var(--pink); text-shadow: 0 0 12px var(--pink); }
+    .steps h2 { font-size: 1.7rem; color: var(--gold); margin: 0 0 4px; }
+    .steps p { margin: 0; color: var(--muted); }
+    .steps strong { color: var(--text); }
+    .btn { display: inline-block; margin-top: 14px; padding: 13px 26px; border-radius: 10px; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: .85rem;
+      background: linear-gradient(180deg, #ffe17a, var(--gold) 50%, var(--gold2)); color: #1a1205; box-shadow: 0 0 24px rgba(247,201,72,.35); }
+    .help { text-align: center; color: var(--muted); margin: 0 0 50px; }
+    footer { padding: 30px 0 46px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
+    .disclaimer { border: 1px solid var(--line); border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 8px; }
+    @media (max-width: 520px) { .steps li { grid-template-columns: 1fr; gap: 6px; } .btn { display: block; text-align: center; } }
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><a class="logo" href="/">Warlock Winners</a></div></header>
+  <div class="marquee" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="check" aria-hidden="true">✓</div>
+      <h1><span class="neon">You're In.</span><br><span class="goldtxt">Welcome To VIP</span></h1>
+      <p class="lead">Thanks for joining Warlock Winners. Your order is complete. Here's how to get your first picks in the next two minutes.</p>
+    </section>
+
+    <ol class="steps">
+      <li>
+        <div class="n" aria-hidden="true">01</div>
+        <div><h2>Check Your Email</h2>
+          <p>Whop just emailed your <strong>order confirmation and receipt</strong> to the address you used at checkout. Don't see it? Check spam or promotions.</p></div>
+      </li>
+      <li class="main">
+        <div class="n" aria-hidden="true">02</div>
+        <div><h2>Join The Private Telegram Channel</h2>
+          <p>Sign in to Whop, open <strong>Warlock Winners</strong>, and follow the <strong>Telegram</strong> step to connect your account. You'll be added to the private channel automatically.</p>
+          <p style="margin-top:8px">No Telegram yet? It's free. Install it from the App Store or Google Play first.</p>
+          <a class="btn" href="https://whop.com/warlock-winners/warlock-winners-vip">Open Warlock Winners On Whop</a></div>
+      </li>
+      <li>
+        <div class="n" aria-hidden="true">03</div>
+        <div><h2>Turn On Notifications</h2>
+          <p>In the channel, tap the channel name, then <strong>Notifications → On</strong>. Picks are posted before the lines move, so you want to see them the moment they drop.</p></div>
+      </li>
+      <li>
+        <div class="n" aria-hidden="true">04</div>
+        <div><h2>Read The Pinned Post</h2>
+          <p>It explains our <strong>unit system and bankroll plan</strong>. Size every bet in units, never chase, and you'll get the most out of every pick.</p></div>
+      </li>
+    </ol>
+
+    <p class="help">Stuck on any step? Email <a href="mailto:BettingSzn@warlockwinners.com">BettingSzn@warlockwinners.com</a> with the email you used at checkout and we'll get you in.</p>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="disclaimer">
+        <strong>For entertainment purposes only. Must be 21+.</strong> No outcome is guaranteed and past results do not predict future results.
+        Bet only what you can afford to lose and check that sports betting is legal where you live. Gambling problem? Call or text <strong>1-800-GAMBLER</strong>.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
