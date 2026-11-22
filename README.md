@@ -1,6 +1,6 @@
 # Warlock Winners
 
-Static site for warlockwinners.com. Edit `index.html`; search for `TODO` to find what needs real info (record, prices, payment links, email).
+Static site for warlockwinners.com. Edit `index.html`; search for `TODO` to find what still needs real info (the Hot Streak record).
 
 ## Go live (GitHub Pages)
 1. Repo Settings → Pages → Source: deploy from branch, pick the branch, folder `/`.

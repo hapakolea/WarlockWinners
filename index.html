@@ -90,6 +90,13 @@
     .price small { font-family: Inter; font-size: .95rem; color: var(--muted); }
     .card ul { list-style: none; padding: 0; margin: 0 0 26px; color: var(--muted); }
     .card li { padding: 6px 0; } .card li::before { content: "♠ "; color: var(--gold); }
+    .founding { text-align: center; color: var(--gold); font-weight: 600; margin: -26px 0 40px; }
+    .plans { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .plans .card { display: flex; flex-direction: column; padding: 26px 22px; }
+    .plans ul { flex: 1; }
+    .plans .price { font-size: 2.9rem; white-space: nowrap; }
+    .tag { white-space: nowrap; }
+    .plans .btn { text-align: center; margin: 0; padding: 14px 10px; }
     .featured { position: relative; border: 2px solid var(--gold); box-shadow: 0 0 40px rgba(247,201,72,.2); transform: scale(1.03); }
     .tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--pink); color: #fff; font-size: .75rem;
       font-weight: 800; padding: 4px 14px; border-radius: 99px; letter-spacing: 1.5px; text-transform: uppercase; box-shadow: 0 0 14px var(--pink); }
@@ -104,8 +111,9 @@
     footer { padding: 46px 0; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
     .disclaimer { border: 1px solid var(--line); border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin-bottom: 20px; }
 
+    @media (max-width: 1000px) { .plans { grid-template-columns: repeat(2, 1fr); gap: 26px; } }
     @media (max-width: 900px) { nav ul { display: none; } .hero { padding: 48px 0 56px; text-align: center; } .hero-grid { grid-template-columns: 1fr; gap: 40px; } .hero p { margin: 0 auto 26px; } .trust { justify-content: center; } .tg { transform: none; max-width: 420px; margin: 0 auto; text-align: left; } }
-    @media (max-width: 720px) { .hero .btn { display: block; margin: 0 0 12px; } .logo { font-size: 1.05rem; } .hero p { font-size: 1rem; } .contact .btn { font-size: .75rem; padding: 14px 16px; overflow-wrap: anywhere; } .stats { grid-template-columns: repeat(3, 1fr); gap: 10px; } .stats .card { padding: 18px 6px; } .num { font-size: 2rem; } .label { font-size: .65rem; letter-spacing: 1px; } .btn-ghost { margin: 14px 0 0; } .featured { transform: none; } }
+    @media (max-width: 720px) { .hero .btn { display: block; margin: 0 0 12px; } .logo { font-size: 1.05rem; } .hero p { font-size: 1rem; } .contact .btn { font-size: .75rem; padding: 14px 16px; overflow-wrap: anywhere; } .stats { grid-template-columns: repeat(3, 1fr); gap: 10px; } .stats .card { padding: 18px 6px; } .num { font-size: 2rem; } .label { font-size: .65rem; letter-spacing: 1px; } .btn-ghost { margin: 14px 0 0; } .featured { transform: none; } .plans { grid-template-columns: 1fr; } .founding { margin-top: -30px; } }
     @media (prefers-reduced-motion: reduce) { .marquee { animation: none; } html { scroll-behavior: auto; } .btn:hover { transform: none; } }
   </style>
 </head>
@@ -188,28 +196,36 @@
       <div class="wrap">
         <h2>Packages</h2>
         <p class="sub">Pick your seat at the table. Cancel anytime; access runs to the end of your paid period.</p>
-        <!-- TODO: set real prices and point each button at your payment link -->
-        <div class="grid">
+        <p class="founding">♠ Founding member pricing: lock in these prices for as long as you stay subscribed.</p>
+        <!-- All buttons go to the Whop product page, where buyers pick a plan. Swap in per-plan checkout links (whop.com/checkout/plan_...) to skip that step. -->
+        <div class="grid plans">
           <div class="card">
             <h3>Daily Card</h3>
-            <div class="price">$XX <small>/ day</small></div>
+            <div class="price">$9.99 <small>/ day</small></div>
             <ul><li>All of today's picks</li><li>Unit sizing</li><li>Private Telegram channel</li></ul>
-            <a class="btn btn-ghost" style="margin:0" href="#contact">Get Today</a>
+            <a class="btn btn-ghost" href="https://whop.com/warlock-winners/warlock-winners-vip">Get Today</a>
+          </div>
+          <div class="card">
+            <h3>Weekly Pass</h3>
+            <div class="price">$19.99 <small>/ week</small></div>
+            <ul><li>Every pick for 7 days</li><li>Full breakdowns</li><li>Private Telegram channel</li></ul>
+            <a class="btn btn-ghost" href="https://whop.com/warlock-winners/warlock-winners-vip">Start Weekly</a>
           </div>
           <div class="card featured">
             <div class="tag">Most Popular</div>
-            <h3>Weekly Pass</h3>
-            <div class="price">$XX <small>/ week</small></div>
-            <ul><li>Every pick for 7 days</li><li>Full breakdowns</li><li>Private Telegram channel</li></ul>
-            <a class="btn btn-gold" href="#contact">Start Weekly</a>
+            <h3>Monthly Pass</h3>
+            <div class="price">$39.99 <small>/ month</small></div>
+            <ul><li>Every pick, every day</li><li>Full breakdowns</li><li>Bankroll plan</li><li>Private Telegram channel</li></ul>
+            <a class="btn btn-gold" href="https://whop.com/warlock-winners/warlock-winners-vip">Start Monthly</a>
           </div>
           <div class="card">
             <h3>Season Pass</h3>
-            <div class="price">$XXX <small>/ season</small></div>
+            <div class="price">$129.99 <small>/ season</small></div>
             <ul><li>Full-season access</li><li>Bankroll plan</li><li>Private Telegram channel</li><li>Best value</li></ul>
-            <a class="btn btn-ghost" style="margin:0" href="#contact">Go All Season</a>
+            <a class="btn btn-ghost" href="https://whop.com/warlock-winners/warlock-winners-vip">Go All Season</a>
           </div>
         </div>
+        <p class="fine">Secure checkout by Whop. Your Telegram access starts right after payment and ends automatically when your pass expires or you cancel.</p>
       </div>
     </section>
 
@@ -231,7 +247,7 @@
     <section id="contact" class="contact">
       <div class="wrap">
         <h2 class="neon">Ready To Play?</h2>
-        <p class="sub">Questions, or ready to join? Email us and we'll send your private Telegram invite.</p>
+        <p class="sub">Questions before you join? Email us and we'll get back to you.</p>
         <a class="btn btn-gold" href="mailto:BettingSzn@warlockwinners.com">BettingSzn@warlockwinners.com</a>
       </div>
     </section>
