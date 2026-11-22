@@ -80,7 +80,7 @@ def sync(db, chat):
             db["subs"][name]["user_id"] = user["id"]
             print(f"{name} joined as {user.get('username') or user['id']}")
         else:
-            print(f"warning: {user.get('username') or user['id']} joined without a subscriber link; remove them in Telegram if unknown")
+            print(f"note: {user.get('username') or user['id']} joined via another link (e.g. Whop); not tracked by this script")
 
 
 def kick(db, chat, name):
