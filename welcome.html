@@ -63,7 +63,7 @@
         Asked to sign in? Use the email you checked out with. Need Telegram? It's free on the App Store and Google Play.</p>
       <script>
         // Set to the Cloudflare Worker URL (join-worker/README.md). Empty = keep the Whop fallback above.
-        const JOIN_API = '';
+        const JOIN_API = 'https://warlock-join.hippest-hapa.workers.dev';
         const receipt = new URLSearchParams(location.search).get('receipt_id') || new URLSearchParams(location.search).get('payment_id');
         const btn = document.getElementById('join'), how = document.getElementById('how');
         if (JOIN_API && receipt) {
