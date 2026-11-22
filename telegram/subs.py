@@ -30,6 +30,8 @@ def api(method, **params):
         if e.code in (401, 404):  # Telegram answers 404 for a malformed token, 401 for a revoked one
             sys.exit("Telegram rejected TELEGRAM_BOT_TOKEN. Copy it again from @BotFather (/mybots > your bot > API Token); it looks like 123456789:AAH...")
         sys.exit(f"Telegram {method} failed: {json.load(e).get('description')}")
+    except urllib.error.URLError as e:
+        sys.exit(f"Can't reach Telegram (check your internet connection): {e.reason}")
 
 
 def load():
