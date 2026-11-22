@@ -123,7 +123,7 @@
       <a class="logo" href="#">Warlock Winners</a>
       <ul>
         <li><a href="#how">How It Works</a></li>
-        <li><a href="#record">Hot Streak</a></li>
+        <li id="nav-record" hidden><a href="#record">Hot Streak</a></li>
         <li><a href="#packages">Packages</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -139,7 +139,7 @@
           <h1><span class="neon">Bet Like</span><br><span class="goldtxt">The House</span></h1>
           <p>Researched picks posted to a private Telegram channel before the lines move, each with unit sizing and the reasoning behind it.</p>
           <a class="btn btn-gold" href="#packages">Get Today's Picks</a>
-          <a class="btn btn-ghost" href="#record">See The Streak</a>
+          <a class="btn btn-ghost" href="#how">How It Works</a>
           <ul class="trust"><li>Instant Telegram access</li><li>Cancel anytime</li><li>Every result posted, wins and losses</li></ul>
         </div>
         <div aria-label="Sample pick as it appears in the members' Telegram channel">
@@ -171,7 +171,8 @@
       </div>
     </section>
 
-    <section id="record" class="record">
+    <!-- Hidden until the record below is real; preview with ?preview. To publish: remove `hidden` here and on #nav-record. -->
+    <section id="record" class="record" hidden>
       <div class="wrap">
         <h2 class="goldtxt">Hot Streak</h2>
         <!-- TODO: set the real date range and numbers for the window you show -->
@@ -242,7 +243,7 @@
         </div>
       </div>
     </section>
-    <script>if (location.search.includes('preview')) document.getElementById('testimonials').hidden = false;</script>
+    <script>if (location.search.includes('preview')) for (const id of ['testimonials', 'record', 'nav-record']) document.getElementById(id).hidden = false;</script>
 
     <section id="contact" class="contact">
       <div class="wrap">
