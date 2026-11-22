@@ -57,15 +57,16 @@
       <div class="check" aria-hidden="true">✓</div>
       <h1><span class="neon">You're In.</span><br><span class="goldtxt">Welcome To VIP</span></h1>
       <p class="lead">Thanks for joining Warlock Winners. Your order is complete. <strong>One step left:</strong> join the private Telegram channel where the picks are posted.</p>
-      <!-- Fallback (no JS, no receipt, or join service down): the Whop hub. The script below swaps in a direct one-person Telegram link. -->
-      <a id="join" class="btn btn-big" href="https://whop.com/warlock-winners/">Join The VIP Channel</a>
-      <p id="how" class="how">Whop opens → tap <strong>Telegram</strong> in the menu → tap <strong>Join</strong>.<br>
-        Asked to sign in? Use the email you checked out with. Need Telegram? It's free on the App Store and Google Play.</p>
+      <!-- Fallback (no JS, no receipt, or join service down): email support. The script below swaps in a direct one-person Telegram link. -->
+      <a id="join" class="btn btn-big" href="mailto:BettingSzn@warlockwinners.com?subject=VIP%20Telegram%20invite">Email Us For Your Invite</a>
+      <p id="how" class="how">We couldn't load your invite link automatically. Email us from the address you used at checkout and we'll add you to the channel.<br>
+        Need Telegram? It's free on the App Store and Google Play.</p>
       <script>
-        // Set to the Cloudflare Worker URL (join-worker/README.md). Empty = keep the Whop fallback above.
+        // Set to the Cloudflare Worker URL (join-worker/README.md). Empty = keep the email fallback above.
         const JOIN_API = 'https://warlock-join.hippest-hapa.workers.dev';
         const receipt = new URLSearchParams(location.search).get('receipt_id') || new URLSearchParams(location.search).get('payment_id');
         const btn = document.getElementById('join'), how = document.getElementById('how');
+        if (receipt) btn.href += encodeURIComponent(' (receipt ' + receipt + ')');
         if (JOIN_API && receipt) {
           const fallback = btn.outerHTML + how.outerHTML;
           btn.textContent = 'Getting your invite…';
@@ -83,7 +84,7 @@
                 how.innerHTML = '<strong>You\'re already in the channel.</strong> Open Telegram to see the picks.';
               } else throw new Error(d.error);
             })
-            .catch((e) => { how.remove(); btn.outerHTML = fallback; document.getElementById('how').insertAdjacentHTML('beforeend', '<br>Trouble? Email us and we\'ll get you in. <small>(code: ' + String(e.message).replace(/[^\w .:-]/g, '').slice(0, 40) + ')</small>'); });
+            .catch((e) => { how.remove(); btn.outerHTML = fallback; document.getElementById('how').insertAdjacentHTML('beforeend', ' <small>(code: ' + String(e.message).replace(/[^\w .:-]/g, '').slice(0, 40) + ')</small>'); });
         }
       </script>
     </section>

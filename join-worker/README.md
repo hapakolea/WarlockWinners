@@ -6,7 +6,7 @@ Every hour the worker:
 - notes who joined with which link, and
 - asks Whop about every member. Anyone whose membership is canceled or expired is removed from the channel. They can rejoin later by buying again.
 
-If Whop's API is down, nobody is removed. If the worker is down, the welcome page falls back to the Whop button.
+If Whop's API is down, nobody is removed. If the worker is down, the welcome page falls back to an "Email Us For Your Invite" button with the receipt number filled in.
 
 ## Setup (about 20 minutes, all in a browser)
 
@@ -37,7 +37,7 @@ In your Whop dashboard, find **Developer** (or **Settings → API keys**). Creat
 8. Copy the worker's address. It looks like `https://warlock-join.<your-name>.workers.dev`.
 
 ### 4. Switch the welcome page on
-Set `JOIN_API` in `welcome.html` to that address, with no slash at the end. Until it's set, the page keeps the Whop button.
+Set `JOIN_API` in `welcome.html` to that address, with no slash at the end. Until it's set, the page shows the email button.
 
 ### 5. Test, then retire Whop's Telegram app
 1. Buy the Daily plan with a second Telegram account. The welcome page should show **Open Telegram & Join**, and tapping it should join the channel.
