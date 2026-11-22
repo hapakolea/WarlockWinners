@@ -83,7 +83,7 @@
                 how.innerHTML = '<strong>You\'re already in the channel.</strong> Open Telegram to see the picks.';
               } else throw new Error(d.error);
             })
-            .catch(() => { how.remove(); btn.outerHTML = fallback; document.getElementById('how').insertAdjacentHTML('beforeend', '<br>Trouble? Email us and we\'ll get you in.'); });
+            .catch((e) => { how.remove(); btn.outerHTML = fallback; document.getElementById('how').insertAdjacentHTML('beforeend', '<br>Trouble? Email us and we\'ll get you in. <small>(code: ' + String(e.message).replace(/[^\w .:-]/g, '').slice(0, 40) + ')</small>'); });
         }
       </script>
     </section>
