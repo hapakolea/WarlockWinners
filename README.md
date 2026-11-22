@@ -33,3 +33,6 @@ The roster has subscriber names and Telegram IDs. **Never put it in this repo: t
 3. Point the script at it: `export SUBS_DB=~/warlockwinners-roster/subscribers.json` (add this line to `~/.zshrc` so it sticks; in cron use the full `/Users/<you>/...` path).
 
 After that, every command commits and pushes the roster to the private repo automatically. If a push fails (for example, you're offline), the script warns you and keeps the local copy, and the next successful run pushes the change. Before adding anyone as a collaborator on that repo, remember they'll see every subscriber.
+
+## One-click Telegram join
+Whop buyers join the channel from the welcome page through a small Cloudflare Worker. Setup and tests: `join-worker/README.md`.
