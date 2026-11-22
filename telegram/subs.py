@@ -8,13 +8,15 @@
   python3 subs.py list            show subscribers and paid-through dates
   python3 subs.py sync            record who joined with which link (every command does this first)
 
-Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID (e.g. -1001234567890). Data: subscribers.json next to this file.
+Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID (e.g. -1001234567890).
+Optional SUBS_DB: roster path (default: subscribers.json next to this file). If it sits in a git clone
+(your PRIVATE roster repo), every change is committed and pushed there.
 Telegram keeps join events for only 24h, so run any command (or `sync`) at least daily,
 otherwise a member's account can't be matched to their name and `remove` can't kick them.
 """
-import datetime as dt, json, os, sys, urllib.parse, urllib.request
+import datetime as dt, json, os, subprocess, sys, urllib.parse, urllib.request
 
-DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "subscribers.json")
+DB = os.environ.get("SUBS_DB") or os.path.join(os.path.dirname(os.path.abspath(__file__)), "subscribers.json")
 LINK_VALID_DAYS = 7  # how long an unused invite link stays valid
 
 
@@ -40,6 +42,19 @@ def save(db):
     with open(tmp, "w") as f:
         json.dump(db, f, indent=2)
     os.replace(tmp, DB)  # atomic, so a crash never leaves a half-written roster
+
+
+def push_roster(msg):
+    d = os.path.dirname(os.path.abspath(DB))
+    if not os.path.exists(os.path.join(d, ".git")):
+        return
+    git = lambda *a: subprocess.run(["git", "-C", d, *a], capture_output=True, text=True)
+    git("add", os.path.basename(DB))
+    if git("diff", "--cached", "--quiet").returncode:  # only commit when the roster changed
+        git("commit", "-m", msg)
+        r = git("push")
+        if r.returncode:
+            print(f"warning: roster saved locally but push failed: {r.stderr.strip()}")
 
 
 def today():
@@ -108,6 +123,7 @@ def main(argv):
         for name, s in sorted(db["subs"].items(), key=lambda kv: kv[1]["until"]):
             print(f"{s['until']}  {name}  {'joined' if s.get('user_id') else 'not joined yet'}")
     save(db)
+    push_roster(" ".join(argv))
 
 
 if __name__ == "__main__":

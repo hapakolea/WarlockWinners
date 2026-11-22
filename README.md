@@ -26,4 +26,10 @@ Day to day:
 - Who's in: `python3 telegram/subs.py list`
 - Run `python3 telegram/subs.py expire` once a day (cron or Task Scheduler). It removes everyone whose paid time has ended. **It has to run at least daily**: Telegram only keeps join events for 24 hours, and the script needs them to match a person to their link.
 
-`telegram/subscribers.json` is the roster. It's gitignored, so back it up yourself and never commit it.
+### Roster backup (private repo)
+The roster has subscriber names and Telegram IDs. **Never put it in this repo: this repo is public, including every branch.** Keep it in a separate private repo instead:
+1. On GitHub, create a new repo named `warlockwinners-roster` and set it to **Private**.
+2. Clone it next to this folder: `git clone https://github.com/hapakolea/warlockwinners-roster.git ../warlockwinners-roster`
+3. Point the script at it: `export SUBS_DB=../warlockwinners-roster/subscribers.json` (use the full path in cron).
+
+After that, every command commits and pushes the roster to the private repo automatically. If a push fails (for example, you're offline), the script warns you and keeps the local copy, and the next successful run pushes the change. Before adding anyone as a collaborator on that repo, remember they'll see every subscriber.

@@ -48,4 +48,10 @@ calls.clear()
 subs.main(["remove", "alice"])
 assert [c[0] for c in calls if c[0] != "getUpdates"] == ["revokeChatInviteLink", "banChatMember", "unbanChatMember"]
 assert subs.load()["subs"] == {}
+# roster inside a git clone is committed after each command (push fails: no remote, only warns)
+import subprocess
+d = os.path.dirname(subs.DB); subprocess.run(["git", "init", "-q", d]); subprocess.run(["git", "-C", d, "config", "user.email", "t@t"]); subprocess.run(["git", "-C", d, "config", "user.name", "t"])
+subs.main(["add", "carol", "7"])
+log = subprocess.run(["git", "-C", d, "log", "--format=%s"], capture_output=True, text=True).stdout
+assert log.strip() == "add carol 7", log
 print("ok")
