@@ -29,7 +29,7 @@
     .neon { color: #fff; text-shadow: 0 0 4px #fff, 0 0 12px var(--cyan), 0 0 28px var(--cyan); }
     .goldtxt { background: linear-gradient(180deg, #fff3c4, var(--gold) 45%, var(--gold2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .lead { color: var(--muted); font-size: 1.1rem; margin: 0 auto; max-width: 560px; }
-    .steps { list-style: none; padding: 0; margin: 40px 0; display: grid; gap: 16px; }
+    .steps { list-style: none; padding: 0; margin: 20px 0 40px; display: grid; gap: 16px; }
     .steps li { display: grid; grid-template-columns: 56px 1fr; gap: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
     .steps li.main { border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(247,201,72,.15); }
     .n { font-family: "Bebas Neue"; font-size: 2.6rem; line-height: 1; color: var(--pink); text-shadow: 0 0 12px var(--pink); }
@@ -38,6 +38,10 @@
     .steps strong { color: var(--text); }
     .btn { display: inline-block; margin-top: 14px; padding: 13px 26px; border-radius: 10px; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: .85rem;
       background: linear-gradient(180deg, #ffe17a, var(--gold) 50%, var(--gold2)); color: #1a1205; box-shadow: 0 0 24px rgba(247,201,72,.35); }
+    .btn-big { font-size: 1.05rem; padding: 18px 38px; margin-top: 28px; }
+    .how { color: var(--muted); font-size: .95rem; margin: 18px auto 0; max-width: 520px; }
+    .how strong, .lead strong { color: var(--text); }
+    .then { text-align: center; font-size: 2rem; color: var(--muted); margin: 56px 0 0; }
     .help { text-align: center; color: var(--muted); margin: 0 0 50px; }
     footer { padding: 30px 0 46px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
     .disclaimer { border: 1px solid var(--line); border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 8px; }
@@ -52,34 +56,29 @@
     <section class="hero">
       <div class="check" aria-hidden="true">✓</div>
       <h1><span class="neon">You're In.</span><br><span class="goldtxt">Welcome To VIP</span></h1>
-      <p class="lead">Thanks for joining Warlock Winners. Your order is complete. Here's how to get your first picks in the next two minutes.</p>
+      <p class="lead">Thanks for joining Warlock Winners. Your order is complete. <strong>One step left:</strong> join the private Telegram channel where the picks are posted.</p>
+      <!-- shortcut: links to the Whop hub; swap for the Telegram app's own URL (whop.com/warlock-winners/<app>/) once it's added, to skip the menu tap -->
+      <a class="btn btn-big" href="https://whop.com/warlock-winners/">Join The VIP Channel</a>
+      <p class="how">Whop opens → tap <strong>Telegram</strong> in the menu → tap <strong>Join</strong>.<br>
+        Asked to sign in? Use the email you checked out with. Need Telegram? It's free on the App Store and Google Play.</p>
     </section>
 
+    <h2 class="then">Then</h2>
     <ol class="steps">
       <li>
         <div class="n" aria-hidden="true">01</div>
-        <div><h2>Check Your Email</h2>
-          <p>Whop just emailed your <strong>order confirmation and receipt</strong> to the address you used at checkout. Don't see it? Check spam or promotions.</p></div>
+        <div><h2>Turn On Notifications</h2>
+          <p>In the channel, tap the channel name, then <strong>Notifications → On</strong>. Picks drop before the lines move.</p></div>
       </li>
-      <li class="main">
+      <li>
         <div class="n" aria-hidden="true">02</div>
-        <div><h2>Join The Private Telegram Channel</h2>
-          <p><strong>1.</strong> Sign in to Whop with the <strong>same email you used at checkout</strong>.<br>
-             <strong>2.</strong> In the <strong>left-hand menu</strong>, click <strong>Warlock Winners</strong> (your membership).<br>
-             <strong>3.</strong> Follow the <strong>Telegram</strong> step to connect your account. You'll be added to the private channel automatically.</p>
-          <p style="margin-top:8px">Shortcut: the link in your Whop order confirmation email takes you straight there. No Telegram yet? It's free. Install it from the App Store or Google Play first.</p>
-          <!-- shortcut: generic Whop sign-in; replace with the direct member URL once known (copy it from the address bar after opening the membership as a buyer) -->
-          <a class="btn" href="https://whop.com/">Go To Whop</a></div>
+        <div><h2>Read The Pinned Post</h2>
+          <p>Our <strong>unit system and bankroll plan</strong>: size every bet in units and never chase.</p></div>
       </li>
       <li>
         <div class="n" aria-hidden="true">03</div>
-        <div><h2>Turn On Notifications</h2>
-          <p>In the channel, tap the channel name, then <strong>Notifications → On</strong>. Picks are posted before the lines move, so you want to see them the moment they drop.</p></div>
-      </li>
-      <li>
-        <div class="n" aria-hidden="true">04</div>
-        <div><h2>Read The Pinned Post</h2>
-          <p>It explains our <strong>unit system and bankroll plan</strong>. Size every bet in units, never chase, and you'll get the most out of every pick.</p></div>
+        <div><h2>Keep Your Receipt</h2>
+          <p>Whop emailed your <strong>order confirmation</strong>. It also has a link back to your membership if you ever need it.</p></div>
       </li>
     </ol>
 
