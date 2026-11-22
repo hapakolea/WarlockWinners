@@ -24,7 +24,7 @@
     header { position: sticky; top: 0; z-index: 10; background: rgba(7,6,11,.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
     nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
     .logo { font-family: Monoton, cursive; font-size: 1.5rem; color: var(--pink); text-decoration: none;
-      text-shadow: 0 0 6px var(--pink), 0 0 18px var(--pink); }
+      text-shadow: 0 0 6px var(--pink), 0 0 18px var(--pink); white-space: nowrap; }
     nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
     nav ul a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .9rem; text-transform: uppercase; letter-spacing: 1px; }
     nav ul a:hover, nav ul a:focus { color: var(--gold); }
@@ -32,16 +32,27 @@
     :focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
 
     /* hero */
-    .hero { position: relative; padding: 110px 0 90px; text-align: center; overflow: hidden;
+    .hero { position: relative; padding: 80px 0 70px; overflow: hidden;
       background:
-        radial-gradient(circle at 20% 10%, rgba(255,46,136,.25), transparent 40%),
-        radial-gradient(circle at 80% 30%, rgba(34,227,255,.18), transparent 45%),
-        radial-gradient(ellipse at bottom, rgba(247,201,72,.12), transparent 60%); }
-    .suits { position: absolute; inset: 0; font-size: 7rem; opacity: .05; pointer-events: none; }
-    .suits span { position: absolute; }
-    .eyebrow { display: inline-block; border: 1px solid var(--gold); color: var(--gold); padding: 4px 14px; border-radius: 99px;
-      font-size: .8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 22px; }
-    .hero h1 { font-size: clamp(3rem, 9vw, 6.5rem); line-height: .95; margin: 0 0 18px; }
+        radial-gradient(circle at 15% 20%, rgba(255,46,136,.22), transparent 40%),
+        radial-gradient(circle at 85% 40%, rgba(34,227,255,.16), transparent 45%); }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+    .eyebrow { color: var(--gold); font-size: .8rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+    .hero h1 { font-size: clamp(3.2rem, 7vw, 5.8rem); line-height: .92; margin: 0 0 18px; }
+    .hero p { color: var(--muted); font-size: 1.15rem; max-width: 520px; margin: 0 0 30px; }
+    .trust { display: flex; flex-wrap: wrap; gap: 8px 20px; list-style: none; padding: 0; margin: 26px 0 0; color: var(--muted); font-size: .85rem; }
+    .trust li::before { content: "♠ "; color: var(--gold); }
+    /* sample Telegram post */
+    .tg { background: #17212b; border: 1px solid #2b3a48; border-radius: 18px; padding: 18px; box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 40px rgba(34,227,255,.12); transform: rotate(1.5deg); }
+    .tg-head { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid #2b3a48; font-size: .85rem; }
+    .tg-head b { display: block; color: #fff; } .tg-head small { color: #7f91a4; }
+    .tg-av { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--pink); font-family: "Bebas Neue"; font-size: 1.2rem; }
+    .tg-msg { background: #182533; border-radius: 12px; padding: 14px 16px; margin-top: 14px; font-size: .92rem; line-height: 1.5; }
+    .tg-msg .k { color: var(--gold); font-weight: 800; letter-spacing: 1px; font-size: .75rem; text-transform: uppercase; }
+    .tg-msg .pick { font-weight: 800; font-size: 1.1rem; color: #fff; margin: 4px 0; }
+    .tg-msg .why { color: #b5c3d1; margin: 8px 0 0; font-size: inherit; max-width: none; }
+    .tg-time { text-align: right; color: #7f91a4; font-size: .75rem; margin-top: 6px; }
+    .sample { text-align: center; color: var(--muted); font-size: .75rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 14px; }
     .neon { color: #fff; text-shadow: 0 0 4px #fff, 0 0 12px var(--cyan), 0 0 28px var(--cyan), 0 0 50px var(--cyan); }
     .goldtxt { background: linear-gradient(180deg, #fff3c4, var(--gold) 45%, var(--gold2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .hero p { color: var(--muted); font-size: 1.15rem; max-width: 620px; margin: 0 auto 34px; }
@@ -93,7 +104,8 @@
     footer { padding: 46px 0; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
     .disclaimer { border: 1px solid var(--line); border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin-bottom: 20px; }
 
-    @media (max-width: 720px) { nav ul { display: none; } .logo { font-size: 1.05rem; white-space: nowrap; } .contact .btn { font-size: .75rem; padding: 14px 16px; overflow-wrap: anywhere; } .stats { grid-template-columns: repeat(3, 1fr); gap: 10px; } .stats .card { padding: 18px 6px; } .num { font-size: 2rem; } .label { font-size: .65rem; letter-spacing: 1px; } .btn-ghost { margin: 14px 0 0; } .featured { transform: none; } }
+    @media (max-width: 900px) { nav ul { display: none; } .hero { padding: 48px 0 56px; text-align: center; } .hero-grid { grid-template-columns: 1fr; gap: 40px; } .hero p { margin: 0 auto 26px; } .trust { justify-content: center; } .tg { transform: none; max-width: 420px; margin: 0 auto; text-align: left; } }
+    @media (max-width: 720px) { .hero .btn { display: block; margin: 0 0 12px; } .logo { font-size: 1.05rem; } .hero p { font-size: 1rem; } .contact .btn { font-size: .75rem; padding: 14px 16px; overflow-wrap: anywhere; } .stats { grid-template-columns: repeat(3, 1fr); gap: 10px; } .stats .card { padding: 18px 6px; } .num { font-size: 2rem; } .label { font-size: .65rem; letter-spacing: 1px; } .btn-ghost { margin: 14px 0 0; } .featured { transform: none; } }
     @media (prefers-reduced-motion: reduce) { .marquee { animation: none; } html { scroll-behavior: auto; } .btn:hover { transform: none; } }
   </style>
 </head>
@@ -113,13 +125,28 @@
 
   <main>
     <section class="hero">
-      <div class="suits" aria-hidden="true"><span style="top:8%;left:6%">♠</span><span style="top:55%;left:12%">♦</span><span style="top:12%;right:8%">♥</span><span style="top:60%;right:5%">♣</span></div>
-      <div class="wrap">
-        <div class="eyebrow">Sports Handicapping · 21+</div>
-        <h1><span class="neon">Bet Like</span><br><span class="goldtxt">The House</span></h1>
-        <p>Sharp, researched picks delivered before the lines move. Vegas confidence, spreadsheet discipline.</p>
-        <a class="btn btn-gold" href="#packages">Get Today's Picks</a>
-        <a class="btn btn-ghost" href="#record">See The Streak</a>
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Sports Handicapping · 21+</div>
+          <h1><span class="neon">Bet Like</span><br><span class="goldtxt">The House</span></h1>
+          <p>Researched picks posted to a private Telegram channel before the lines move, each with unit sizing and the reasoning behind it.</p>
+          <a class="btn btn-gold" href="#packages">Get Today's Picks</a>
+          <a class="btn btn-ghost" href="#record">See The Streak</a>
+          <ul class="trust"><li>Instant Telegram access</li><li>Cancel anytime</li><li>Every result posted, wins and losses</li></ul>
+        </div>
+        <div aria-label="Sample pick as it appears in the members' Telegram channel">
+          <div class="tg">
+            <div class="tg-head"><div class="tg-av" aria-hidden="true">WW</div><div><b>Warlock Winners VIP</b><small>private channel</small></div></div>
+            <div class="tg-msg">
+              <div class="k">NFL · Sunday 1:00 PM ET</div>
+              <div class="pick">Home Team -3.5 (-110)</div>
+              <div><strong>2 units</strong> · Play to -4</div>
+              <p class="why">Why: short rest for the road side, line opened -2.5 and sharp money pushed it. Grab it before it hits the key number.</p>
+              <div class="tg-time">9:14 AM ✓✓</div>
+            </div>
+          </div>
+          <div class="sample">Sample post</div>
+        </div>
       </div>
     </section>
     <div class="marquee" aria-hidden="true"></div>
