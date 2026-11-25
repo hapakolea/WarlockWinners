@@ -1,6 +1,7 @@
 // One-click Telegram join for Whop buyers (Cloudflare Worker). Setup: join-worker/README.md
 //
 // GET /join?receipt_id=pay_...  -> checks the payment with Whop, returns a one-person invite link
+// GET /join?email=you@x.com      -> fallback when the checkout redirect carried no receipt: finds an active member by email
 // hourly cron                   -> records who joined with which link, removes members whose Whop membership ended
 //
 // Env: WHOP_API_KEY, TELEGRAM_BOT_TOKEN (secrets), TELEGRAM_CHANNEL_ID, ALLOWED_ORIGIN (vars), KV (KV namespace)
@@ -15,11 +16,22 @@ export default {
     const url = new URL(req.url);
     if (url.pathname !== '/join') return new Response('{"error":"not_found"}', { status: 404, headers });
     const receipt = url.searchParams.get('receipt_id') || url.searchParams.get('payment_id') || '';
-    if (!/^pay_[A-Za-z0-9]+$/.test(receipt)) return new Response('{"error":"bad_receipt"}', { status: 400, headers });
+    const email = (url.searchParams.get('email') || '').trim().toLowerCase();
+    const who = receipt || email;
     try {
-      return new Response(JSON.stringify(await join(env, receipt)), { headers });
+      if (receipt) {
+        if (!/^pay_[A-Za-z0-9]+$/.test(receipt)) return new Response('{"error":"bad_receipt"}', { status: 400, headers });
+        return new Response(JSON.stringify(await join(env, `r:${receipt}`, () => memFromReceipt(env, receipt))), { headers });
+      }
+      if (!/^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/.test(email)) return new Response('{"error":"bad_email"}', { status: 400, headers });
+      // Email lookups can be guessed at, so cap them per visitor IP.
+      const ip = req.headers.get('cf-connecting-ip') || 'unknown';
+      const tries = Number(await env.KV.get(`rl:${ip}`)) || 0;
+      if (tries >= 10) return new Response('{"error":"too_many_tries"}', { status: 429, headers });
+      await env.KV.put(`rl:${ip}`, String(tries + 1), { expirationTtl: 3600 });
+      return new Response(JSON.stringify(await join(env, `e:${email}`, () => memFromEmail(env, email))), { headers });
     } catch (e) {
-      console.log('join failed', receipt, e.message);
+      console.log('join failed', who, e.message);
       return new Response(JSON.stringify({ error: e.code || 'server_error' }), { status: e.status || 500, headers });
     }
   },
@@ -51,9 +63,30 @@ async function tg(env, method, body) {
 const isValid = (m) => !!m && VALID.includes(m.status);
 const idOf = (x) => (typeof x === 'string' ? x : x?.id);
 
-async function join(env, receipt) {
+async function memFromReceipt(env, receipt) {
+  const payment = await whop(env, `/payments/${receipt}`);
+  if (!payment) throw fail('unknown_receipt', 404);
+  const memId = idOf(payment.membership) || payment.membership_id;
+  if (!memId) throw fail('no_membership', 409);
+  return memId;
+}
+
+const list = (res) => (Array.isArray(res) ? res : res?.data || []);
+
+async function memFromEmail(env, email) {
+  // Needs a Whop key with member read + member email read; otherwise Whop hides emails and nothing matches.
+  const members = list(await whop(env, `/members?query=${encodeURIComponent(email)}`));
+  const member = members.find((m) => [m.email, m.user?.email].some((e) => (e || '').toLowerCase() === email));
+  if (!member) throw fail('no_member', 404);
+  const ms = list(await whop(env, `/memberships?member_id=${encodeURIComponent(member.id)}`));
+  const mem = ms.find(isValid) || ms[0];
+  if (!mem) throw fail('no_membership', 409);
+  return mem.id;
+}
+
+async function join(env, cacheKey, findMem) {
   const now = Math.floor(Date.now() / 1000);
-  const cached = await env.KV.get(`r:${receipt}`, 'json');
+  const cached = await env.KV.get(cacheKey, 'json');
   if (cached) {
     const m = await env.KV.get(`m:${cached.mem}`, 'json');
     if (m?.user_id) return { already: true };
@@ -62,10 +95,7 @@ async function join(env, receipt) {
     if (m && cached.created + LINK_HOURS * 3600 > now + 300) return { link: cached.link };
   }
 
-  const payment = await whop(env, `/payments/${receipt}`);
-  if (!payment) throw fail('unknown_receipt', 404);
-  const memId = idOf(payment.membership) || payment.membership_id;
-  if (!memId) throw fail('no_membership', 409);
+  const memId = await findMem();
   if (!isValid(await whop(env, `/memberships/${memId}`))) throw fail('inactive', 403);
 
   if (cached?.link) await tg(env, 'revokeChatInviteLink', { chat_id: env.TELEGRAM_CHANNEL_ID, invite_link: cached.link }).catch(() => {});
@@ -73,7 +103,7 @@ async function join(env, receipt) {
     chat_id: env.TELEGRAM_CHANNEL_ID, name: memId.slice(0, 32), member_limit: 1, expire_date: now + LINK_HOURS * 3600,
   });
   const prev = await env.KV.get(`m:${memId}`, 'json');
-  await env.KV.put(`r:${receipt}`, JSON.stringify({ mem: memId, link, created: now }));
+  await env.KV.put(cacheKey, JSON.stringify({ mem: memId, link, created: now }));
   await env.KV.put(`m:${memId}`, JSON.stringify({ link, user_id: prev?.user_id ?? null }));
   return { link };
 }

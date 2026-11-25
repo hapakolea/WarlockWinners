@@ -45,12 +45,19 @@
     .btn-big { font-size: 1.05rem; padding: 18px 38px; margin-top: 30px; }
     .how { color: var(--muted); font-size: .95rem; margin: 18px auto 0; max-width: 520px; }
     .how strong, .lead strong { color: var(--text); }
+    .btn.secondary { background: rgba(255,255,255,.04); border: 1px solid var(--line-2); box-shadow: none; font-size: .92rem; padding: 11px 22px; margin-top: 18px; }
+    .byemail { max-width: 480px; margin: 28px auto 0; padding: 22px; border-radius: 20px; background: linear-gradient(180deg, var(--surface-2), var(--surface)); border: 1px solid rgba(255,61,139,.35); }
+    .form-msg { margin: 0 0 14px; color: var(--text); font-weight: 500; }
+    .byemail .row { display: flex; gap: 10px; }
+    .byemail input { flex: 1; min-width: 0; padding: 13px 16px; border-radius: 99px; border: 1px solid var(--line-2); background: rgba(0,0,0,.3); color: var(--text); font: 500 1rem Inter, sans-serif; }
+    .byemail input:focus { outline: 2px solid var(--pink); outline-offset: 2px; }
+    .byemail .btn { margin: 0; flex: none; border: 0; cursor: pointer; font-family: inherit; }
     .then { text-align: center; font-size: .8rem; font-family: Inter; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--pink-2); margin: 64px 0 0; }
     .help { text-align: center; color: var(--muted); margin: 0 0 50px; }
     footer { padding: 30px 0 46px; color: var(--muted); font-size: .86rem; border-top: 1px solid var(--line); }
     .disclaimer { padding: 18px 22px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid var(--line); line-height: 1.65; }
     .disclaimer strong { color: var(--text); }
-    @media (max-width: 520px) { .steps li { grid-template-columns: 1fr; gap: 10px; } .btn { display: flex; } .brand-word { font-size: 12.5px; letter-spacing: .06em; } }
+    @media (max-width: 520px) { .byemail .row { flex-direction: column; } .steps li { grid-template-columns: 1fr; gap: 10px; } .btn { display: flex; } .brand-word { font-size: 12.5px; letter-spacing: .06em; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
@@ -66,35 +73,59 @@
       <a id="join" class="btn btn-big" href="mailto:BettingSzn@warlockwinners.com?subject=VIP%20Telegram%20invite">Email Us For Your Invite</a>
       <p id="how" class="how">We couldn't load your invite link automatically. Email us from the address you used at checkout and we'll add you to the channel.<br>
         Need Telegram? It's free on the App Store and Google Play.</p>
+      <form id="byemail" class="byemail" hidden>
+        <p id="form-msg" class="form-msg">Enter the email you used at checkout and we'll get your invite.</p>
+        <div class="row"><input id="em" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com" aria-label="Email you used at checkout"><button class="btn" type="submit">Get my invite</button></div>
+      </form>
       <script>
         // Set to the Cloudflare Worker URL (join-worker/README.md). Empty = keep the email fallback above.
         const JOIN_API = 'https://warlock-join.hippest-hapa.workers.dev';
-        // Whop normally adds ?receipt_id=pay_...; also read the #fragment in case an in-app browser moves it there.
+        // Whop normally adds ?receipt_id= or ?payment_id=pay_...; also read the #fragment in case an in-app browser moves it there.
         const q = new URLSearchParams(location.search + '&' + location.hash.slice(1));
         const receipt = q.get('receipt_id') || q.get('payment_id');
         const btn = document.getElementById('join'), how = document.getElementById('how');
+        const form = document.getElementById('byemail'), msg = document.getElementById('form-msg'), em = document.getElementById('em');
         if (receipt) btn.href += encodeURIComponent(' (receipt ' + receipt + ')');
-        // Diagnostic: show which parameter NAMES arrived (never values) so a missing receipt can be traced.
-        else how.insertAdjacentHTML('beforeend', ' <small>(code: no_receipt; got: ' + ([...q.keys()].filter(Boolean).join(',').replace(/[^\w,.-]/g, '').slice(0, 60) || 'nothing') + ')</small>');
-        if (JOIN_API && receipt) {
-          const fallback = btn.outerHTML + how.outerHTML;
-          btn.textContent = 'Getting your invite…';
-          btn.removeAttribute('href');
-          how.textContent = 'One moment, we\'re checking your payment.';
-          fetch(JOIN_API + '/join?receipt_id=' + encodeURIComponent(receipt))
-            .then(r => r.json())
-            .then(d => {
-              if (d.link) {
-                btn.href = d.link;
-                btn.textContent = 'Open Telegram & Join';
-                how.innerHTML = 'Tap the button, then tap <strong>Join Channel</strong> in Telegram. This link is just for you and works once.<br>Need Telegram? It\'s free on the App Store and Google Play. Install it, then come back and tap again.';
-              } else if (d.already) {
-                btn.remove();
-                how.innerHTML = '<strong>You\'re already in the channel.</strong> Open Telegram to see the picks.';
-              } else throw new Error(d.error);
-            })
-            .catch((e) => { how.remove(); btn.outerHTML = fallback; document.getElementById('how').insertAdjacentHTML('beforeend', ' <small>(code: ' + String(e.message).replace(/[^\w .:-]/g, '').slice(0, 40) + ')</small>'); });
+        const mailHref = btn.href, mailHow = how.innerHTML;
+        const clean = (t, n) => String(t).replace(/[^\w ,.:;-]/g, '').slice(0, n);
+        const MSGS = {
+          no_member: 'We couldn\'t find an active membership for that email. Use the email from your Whop receipt.',
+          no_membership: 'That email has no active pass. If you just paid, wait a minute and try again.',
+          inactive: 'That pass isn\'t active. If you just paid, wait a minute and try again.',
+          bad_email: 'That doesn\'t look like an email. Check it and try again.',
+          too_many_tries: 'Too many tries. Please email us and we\'ll add you.',
+        };
+        // Back to the email-us button, plus the email lookup form as a second way in.
+        function fallback(code) {
+          btn.href = mailHref; btn.textContent = 'Email Us For Your Invite'; btn.classList.add('secondary');
+          const tag = ' <small>(code: ' + clean(code, 60) + ')</small>';
+          if (!JOIN_API) { how.innerHTML = mailHow + tag; return; }
+          // Email lookup first; emailing us by hand becomes the backup below it.
+          btn.before(form); form.hidden = false;
+          msg.textContent = MSGS[code] || 'Enter the email you used at checkout to get your invite.';
+          how.innerHTML = 'Still stuck? Email us from your checkout address and we\'ll add you by hand.<br>Need Telegram? It\'s free on the App Store and Google Play.' + tag;
         }
+        function ask(query, waiting) {
+          btn.removeAttribute('href'); btn.textContent = 'Getting your invite…'; btn.classList.remove('secondary');
+          how.textContent = waiting;
+          return fetch(JOIN_API + '/join?' + query).then((r) => r.json()).then((d) => {
+            if (d.link) {
+              form.hidden = true;
+              btn.href = d.link; btn.textContent = 'Open Telegram & Join';
+              how.innerHTML = 'Tap the button, then tap <strong>Join Channel</strong> in Telegram. This link is just for you and works once.<br>Need Telegram? It\'s free on the App Store and Google Play. Install it, then come back and tap again.';
+            } else if (d.already) {
+              form.hidden = true; btn.remove();
+              how.innerHTML = '<strong>You\'re already in the channel.</strong> Open Telegram to see the picks.';
+            } else throw new Error(d.error);
+          }).catch((e) => fallback(e.message));
+        }
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          ask('email=' + encodeURIComponent(em.value.trim()), 'One moment, we\'re looking up your membership.');
+        });
+        if (JOIN_API && receipt) ask('receipt_id=' + encodeURIComponent(receipt), 'One moment, we\'re checking your payment.');
+        // No receipt: say which parameter NAMES arrived (never values) and offer the email lookup.
+        else fallback('no_receipt; got: ' + (clean([...q.keys()].filter(Boolean).join(','), 50) || 'nothing'));
       </script>
     </section>
 
