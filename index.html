@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Warlock Winners | Sports Handicapping</title>
-  <meta name="description" content="Warlock Winners: researched picks for NFL, NCAA, NHL, NBA, MLB and combat sports, posted to a private Telegram channel before the lines move.">
+  <title>Warlock Winners | 20 Years Sharp. Now AI-Powered.</title>
+  <meta name="description" content="Sharp picks from a handicapper with 20+ years of experience, backed by AI models that keep learning. NFL, NCAA, NHL, NBA, MLB and combat sports in one pass, delivered by private Telegram.">
   <!-- Link previews (Telegram, X, iMessage) -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://warlockwinners.com/">
-  <meta property="og:title" content="Warlock Winners | Bet Like The House">
-  <meta property="og:description" content="One pass, every sport: NFL, NCAA, NHL, NBA, MLB and combat sports picks in a private Telegram channel. 21+.">
+  <meta property="og:title" content="Warlock Winners | 20 Years Sharp. Now AI-Powered.">
+  <meta property="og:description" content="20+ years of handicapping plus AI models that keep learning. NFL, NCAA, NHL, NBA, MLB and combat sports picks in one pass, delivered by private Telegram. 21+.">
   <meta property="og:image" content="https://warlockwinners.com/brand/whop-banner-1920x1080.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#08070c">
@@ -32,12 +32,13 @@
     .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
     h1, h2, h3 { font-family: "Inter Tight", Inter, sans-serif; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin: 0; }
 
-    /* logo (Option B: monogram + wordmark; see brand/logo-options.png) */
+    /* logo: Option A neon wordmark (see brand/logo-options.png). .brand-mark is kept for the Telegram avatar in the sample post. */
     .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; white-space: nowrap; }
     .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--pink), #c2185b);
       font: 800 11.5px Unbounded, sans-serif; letter-spacing: -.04em; color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14), 0 0 22px rgba(255,61,139,.5); }
-    .brand-word { font: 600 14px Unbounded, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #fff; text-shadow: 0 0 14px rgba(255,61,139,.45); }
-    .brand-word span { color: var(--pink-2); }
+    .brand-word { font: 700 15px Unbounded, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--pink-2);
+      text-shadow: 0 0 5px rgba(255,61,139,.9), 0 0 18px rgba(255,61,139,.55), 0 0 40px rgba(255,61,139,.3); transition: text-shadow .3s; }
+    .brand:hover .brand-word { text-shadow: 0 0 6px rgba(255,61,139,1), 0 0 22px rgba(255,61,139,.7), 0 0 52px rgba(255,61,139,.4); }
 
     /* header */
     header { position: sticky; top: 0; z-index: 20; background: rgba(8,7,12,.6); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);
@@ -70,14 +71,18 @@
       color: var(--muted); font-size: .85rem; font-weight: 500; margin-bottom: 26px; }
     .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(61,255,154,.6); animation: pulse 2.4s infinite; }
     @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(61,255,154,0); } 100% { box-shadow: 0 0 0 0 rgba(61,255,154,0); } }
-    .hero h1 { font-size: clamp(3rem, 7.4vw, 6rem); letter-spacing: -.045em; line-height: .95; margin-bottom: 22px; }
+    .hero h1 { font-size: clamp(2.6rem, 5.6vw, 4.6rem); letter-spacing: -.045em; line-height: .97; margin-bottom: 22px; }
     .grad { background: linear-gradient(100deg, var(--pink) 10%, var(--pink-2) 45%, var(--gold) 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .lead { color: var(--muted); font-size: 1.15rem; max-width: 520px; margin: 0 0 32px; }
     .cta { display: flex; flex-wrap: wrap; gap: 12px; }
     .sports { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 32px 0 0; }
     .sports li { padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: rgba(255,255,255,.03); font-size: .82rem; font-weight: 600; letter-spacing: .02em; color: var(--text); }
-    .sports-label { margin: 28px 0 0; font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }
-    .sports-label + .sports { margin-top: 10px; }
+    .proof { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0; list-style: none; padding: 0; margin: 36px 0 0; }
+    .proof li { padding: 0 24px; border-left: 1px solid var(--line-2); } .proof li:first-child { padding-left: 0; border-left: 0; }
+    .proof b { display: block; font: 800 1.9rem/1 "Inter Tight"; letter-spacing: -.03em; color: var(--text); }
+    .proof span { display: block; margin-top: 6px; font-size: .82rem; color: var(--muted); line-height: 1.35; max-width: 130px; }
+    .proof + .sports { margin-top: 26px; }
+    .aligned { display: inline-flex; gap: 6px; margin-top: 10px; font-size: .74rem; font-weight: 600; color: var(--green); background: rgba(61,255,154,.08); border: 1px solid rgba(61,255,154,.22); border-radius: 99px; padding: 3px 10px; }
 
     /* sample Telegram post */
     .tg-wrap { position: relative; }
@@ -170,23 +175,24 @@
       nav ul { display: none; }
       .hero { padding: 56px 0 64px; text-align: center; }
       .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-      .lead { margin: 0 auto 28px; } .cta, .sports { justify-content: center; }
+      .lead { margin: 0 auto 28px; } .cta, .sports { justify-content: center; } .proof { justify-content: center; } .proof li { text-align: center; } .proof span { margin-left: auto; margin-right: auto; }
       .tg-wrap { max-width: 440px; margin: 0 auto; text-align: left; }
       section { padding: 80px 0; }
     }
     @media (max-width: 600px) {
       .wrap { padding: 0 18px; }
-      .brand-word { font-size: 12px; letter-spacing: .04em; }
-      .hero h1 { font-size: clamp(2.7rem, 13vw, 3.4rem); }
+      .brand-word { font-size: 12.5px; letter-spacing: .06em; }
+      .hero h1 { font-size: clamp(2.2rem, 10.6vw, 3rem); }
       .lead { font-size: 1.02rem; }
       .cta .btn { flex: 1 1 100%; }
+      .proof li { padding: 0 12px; } .proof b { font-size: 1.6rem; } .proof span { font-size: .76rem; }
       .plans { grid-template-columns: 1fr; gap: 26px; }
       .stats { grid-template-columns: repeat(3, 1fr); gap: 10px; } .stats .card { padding: 18px 6px; } .num { font-size: 1.9rem; } .label { font-size: .64rem; letter-spacing: .06em; }
       .cta-panel { padding: 48px 20px; }
       .cta-panel .btn { font-size: .85rem; padding: 14px 18px; overflow-wrap: anywhere; }
       .foot { flex-direction: column; align-items: flex-start; }
     }
-    @media (max-width: 370px) { .brand-word { display: none; } }
+    @media (max-width: 370px) { .brand-word { font-size: 11px; letter-spacing: .03em; } }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -197,7 +203,7 @@
 <body>
   <header id="top">
     <nav class="wrap" aria-label="Main">
-      <a class="brand" href="#" aria-label="Warlock Winners home"><span class="brand-mark" aria-hidden="true">WW</span><span class="brand-word">Warlock <span>Winners</span></span></a>
+      <a class="brand" href="#" aria-label="Warlock Winners home"><span class="brand-word">Warlock Winners</span></a>
       <ul>
         <li><a href="#how">How It Works</a></li>
         <li id="nav-record" hidden><a href="#record">Hot Streak</a></li>
@@ -212,15 +218,19 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <div class="eyebrow reveal"><span class="dot" aria-hidden="true"></span>Sports handicapping · 21+</div>
-          <h1 class="reveal" style="--d:1">Bet like<br><span class="grad">the house.</span></h1>
-          <p class="lead reveal" style="--d:2">Researched picks posted to a private Telegram channel before the lines move, each with unit sizing and the reasoning behind it.</p>
+          <div class="eyebrow reveal"><span class="dot" aria-hidden="true"></span>Sharp handicapping · AI-powered · 21+</div>
+          <h1 class="reveal" style="--d:1">20 years sharp.<br><span class="grad">Now AI&#8209;powered.</span></h1>
+          <p class="lead reveal" style="--d:2">Two decades of reading lines, now backed by AI models that get sharper with every game they grade. The models scan odds, injuries and line moves around the clock, and twenty years of judgment decides what makes the card.</p>
           <div class="cta reveal" style="--d:3">
             <a class="btn btn-primary" href="#packages">Get today's picks <span class="arrow" aria-hidden="true">→</span></a>
             <a class="btn btn-ghost" href="#how">How it works</a>
           </div>
-          <p class="sports-label reveal" style="--d:4">Every pass includes every sport we handicap</p>
-          <ul class="sports reveal" style="--d:4" aria-label="Sports covered">
+          <ul class="proof reveal" style="--d:4">
+            <li><b>20+</b><span>years handicapping</span></li>
+            <li><b>AI</b><span>models that keep learning</span></li>
+            <li><b>6</b><span>sports in every pass</span></li>
+          </ul>
+          <ul class="sports reveal" style="--d:5" aria-label="Sports covered">
             <li>NFL</li><li>NCAA</li><li>NHL</li><li>NBA</li><li>MLB</li><li>Combat Sports</li>
           </ul>
         </div>
@@ -231,6 +241,7 @@
               <div class="k">NFL · Sunday 1:00 PM ET</div>
               <div class="pick">Home Team -3.5 (-110)</div>
               <div><strong>2 units</strong> · Play to -4</div>
+              <div class="aligned">✓ AI model + handicapper agree</div>
               <p class="why">Why: short rest for the road side, line opened -2.5 and sharp money pushed it. Grab it before it hits the key number.</p>
               <div class="tg-time">9:14 AM ✓✓</div>
             </div>
@@ -360,7 +371,7 @@
         Gambling problem? Call or text <strong>1-800-GAMBLER</strong>.
       </div>
       <div class="foot">
-        <a class="brand" href="#top" aria-label="Back to top"><span class="brand-mark" aria-hidden="true">WW</span><span class="brand-word">Warlock <span>Winners</span></span></a>
+        <a class="brand" href="#top" aria-label="Back to top"><span class="brand-word">Warlock Winners</span></a>
         <span>&copy; 2026 Warlock Winners. All rights reserved.</span>
       </div>
     </div>
