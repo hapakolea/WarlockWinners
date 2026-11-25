@@ -69,9 +69,13 @@
       <script>
         // Set to the Cloudflare Worker URL (join-worker/README.md). Empty = keep the email fallback above.
         const JOIN_API = 'https://warlock-join.hippest-hapa.workers.dev';
-        const receipt = new URLSearchParams(location.search).get('receipt_id') || new URLSearchParams(location.search).get('payment_id');
+        // Whop normally adds ?receipt_id=pay_...; also read the #fragment in case an in-app browser moves it there.
+        const q = new URLSearchParams(location.search + '&' + location.hash.slice(1));
+        const receipt = q.get('receipt_id') || q.get('payment_id');
         const btn = document.getElementById('join'), how = document.getElementById('how');
         if (receipt) btn.href += encodeURIComponent(' (receipt ' + receipt + ')');
+        // Diagnostic: show which parameter NAMES arrived (never values) so a missing receipt can be traced.
+        else how.insertAdjacentHTML('beforeend', ' <small>(code: no_receipt; got: ' + ([...q.keys()].filter(Boolean).join(',').replace(/[^\w,.-]/g, '').slice(0, 60) || 'nothing') + ')</small>');
         if (JOIN_API && receipt) {
           const fallback = btn.outerHTML + how.outerHTML;
           btn.textContent = 'Getting your invite…';
