@@ -8,54 +8,61 @@
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&family=Monoton&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff3d8b'/%3E%3Ctext x='32' y='42' font-family='Arial Black,Arial' font-weight='900' font-size='26' fill='white' text-anchor='middle'%3EWW%3C/text%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@700;800&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
   <style>
-    /* shortcut: copies the main page's colors/buttons instead of a shared CSS file; move to one stylesheet if more pages are added */
-    :root { --bg: #07060b; --panel: #121019; --line: #2a2533; --text: #f4f1f8; --muted: #a49cb3; --gold: #f7c948; --gold2: #b8860b; --pink: #ff2e88; --cyan: #22e3ff; --green: #39ff88; }
+    /* shortcut: copies the main page's colors, logo and buttons instead of a shared CSS file; move to one stylesheet if more pages are added */
+    :root { --bg: #08070c; --surface: #0f0e15; --surface-2: #15131d; --line: rgba(255,255,255,.08); --line-2: rgba(255,255,255,.14);
+      --text: #f5f3f8; --muted: #a39cb2; --pink: #ff3d8b; --pink-2: #ff7ab0; --cyan: #3ce3ff; --gold: #f5c451; --green: #3dff9a; --ease: cubic-bezier(.2,.7,.2,1); }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6;
-      background-image: radial-gradient(circle at 15% 10%, rgba(255,46,136,.2), transparent 40%), radial-gradient(circle at 85% 30%, rgba(34,227,255,.14), transparent 45%); background-repeat: no-repeat; }
-    a { color: var(--gold); }
-    :focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+    body { margin: 0; font: 400 16px/1.6 Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased;
+      background-image: radial-gradient(40% 40% at 15% 5%, rgba(255,61,139,.2), transparent 70%), radial-gradient(35% 35% at 85% 20%, rgba(60,227,255,.12), transparent 70%); background-repeat: no-repeat; }
+    a { color: var(--pink-2); }
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 8px; }
     .wrap { max-width: 760px; margin: 0 auto; padding: 0 22px; }
-    header { padding: 22px 0; }
-    .logo { font-family: Monoton, cursive; font-size: 1.4rem; color: var(--pink); text-decoration: none; white-space: nowrap; text-shadow: 0 0 6px var(--pink), 0 0 18px var(--pink); }
-    .marquee { height: 14px; background: radial-gradient(circle, var(--gold) 3px, transparent 4px) 0 50% / 22px 14px repeat-x; }
-    h1, h2 { font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; letter-spacing: 1.5px; }
-    .hero { text-align: center; padding: 40px 0 10px; }
-    .check { width: 74px; height: 74px; border-radius: 50%; margin: 0 auto 18px; display: grid; place-items: center; font-size: 2.2rem; font-weight: 800;
-      color: #07060b; background: var(--green); box-shadow: 0 0 30px rgba(57,255,136,.5); }
-    h1 { font-size: clamp(2.8rem, 9vw, 4.6rem); line-height: .95; margin: 0 0 14px; }
-    .neon { color: #fff; text-shadow: 0 0 4px #fff, 0 0 12px var(--cyan), 0 0 28px var(--cyan); }
-    .goldtxt { background: linear-gradient(180deg, #fff3c4, var(--gold) 45%, var(--gold2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    header { padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; white-space: nowrap; }
+    .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--pink), #c2185b);
+      font: 800 11.5px Unbounded, sans-serif; letter-spacing: -.04em; color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14), 0 0 22px rgba(255,61,139,.5); }
+    .brand-word { font: 600 14px Unbounded, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #fff; text-shadow: 0 0 14px rgba(255,61,139,.45); }
+    .brand-word span { color: var(--pink-2); }
+    h1, h2 { font-family: "Inter Tight", Inter, sans-serif; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; }
+    .hero { text-align: center; padding: 56px 0 10px; }
+    .check { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 22px; display: grid; place-items: center; font-size: 1.8rem; font-weight: 800;
+      color: #08070c; background: var(--green); box-shadow: 0 0 0 8px rgba(61,255,154,.1), 0 0 40px rgba(61,255,154,.45); animation: pop .6s var(--ease) both; }
+    @keyframes pop { from { transform: scale(.6); opacity: 0; } }
+    h1 { font-size: clamp(2.6rem, 9vw, 4.4rem); letter-spacing: -.045em; line-height: .98; margin: 0 0 16px; }
+    .grad { background: linear-gradient(100deg, var(--pink) 10%, var(--pink-2) 45%, var(--gold) 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .lead { color: var(--muted); font-size: 1.1rem; margin: 0 auto; max-width: 560px; }
-    .steps { list-style: none; padding: 0; margin: 20px 0 40px; display: grid; gap: 16px; }
-    .steps li { display: grid; grid-template-columns: 56px 1fr; gap: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
-    .steps li.main { border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(247,201,72,.15); }
-    .n { font-family: "Bebas Neue"; font-size: 2.6rem; line-height: 1; color: var(--pink); text-shadow: 0 0 12px var(--pink); }
-    .steps h2 { font-size: 1.7rem; color: var(--gold); margin: 0 0 4px; }
+    .steps { list-style: none; padding: 0; margin: 20px 0 40px; display: grid; gap: 14px; }
+    .steps li { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start; background: linear-gradient(180deg, var(--surface-2), var(--surface)); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+    .n { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; font: 800 .95rem "Inter Tight"; color: var(--pink-2); background: rgba(255,61,139,.1); border: 1px solid rgba(255,61,139,.25); }
+    .steps h2 { font-size: 1.3rem; letter-spacing: -.02em; margin: 2px 0 6px; }
     .steps p { margin: 0; color: var(--muted); }
     .steps strong { color: var(--text); }
-    .btn { display: inline-block; margin-top: 14px; padding: 13px 26px; border-radius: 10px; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: .85rem;
-      background: linear-gradient(180deg, #ffe17a, var(--gold) 50%, var(--gold2)); color: #1a1205; box-shadow: 0 0 24px rgba(247,201,72,.35); }
-    .btn-big { font-size: 1.05rem; padding: 18px 38px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 14px; padding: 14px 26px; border-radius: 99px; font-weight: 600; text-decoration: none; font-size: .97rem;
+      color: #fff; background: linear-gradient(135deg, var(--pink), #e0287a); box-shadow: 0 8px 28px -8px rgba(255,61,139,.7), inset 0 1px 0 rgba(255,255,255,.25);
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px -8px rgba(255,61,139,.85), inset 0 1px 0 rgba(255,255,255,.25); }
+    .btn-big { font-size: 1.05rem; padding: 18px 38px; margin-top: 30px; }
     .how { color: var(--muted); font-size: .95rem; margin: 18px auto 0; max-width: 520px; }
     .how strong, .lead strong { color: var(--text); }
-    .then { text-align: center; font-size: 2rem; color: var(--muted); margin: 56px 0 0; }
+    .then { text-align: center; font-size: .8rem; font-family: Inter; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--pink-2); margin: 64px 0 0; }
     .help { text-align: center; color: var(--muted); margin: 0 0 50px; }
-    footer { padding: 30px 0 46px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
-    .disclaimer { border: 1px solid var(--line); border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 8px; }
-    @media (max-width: 520px) { .steps li { grid-template-columns: 1fr; gap: 6px; } .btn { display: block; text-align: center; } }
+    footer { padding: 30px 0 46px; color: var(--muted); font-size: .86rem; border-top: 1px solid var(--line); }
+    .disclaimer { padding: 18px 22px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid var(--line); line-height: 1.65; }
+    .disclaimer strong { color: var(--text); }
+    @media (max-width: 520px) { .steps li { grid-template-columns: 1fr; gap: 10px; } .btn { display: flex; } .brand-word { font-size: 12px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
 <body>
-  <header><div class="wrap"><a class="logo" href="/">Warlock Winners</a></div></header>
-  <div class="marquee" aria-hidden="true"></div>
+  <header><div class="wrap"><a class="brand" href="/" aria-label="Warlock Winners home"><span class="brand-mark" aria-hidden="true">WW</span><span class="brand-word">Warlock <span>Winners</span></span></a></div></header>
 
   <main class="wrap">
     <section class="hero">
       <div class="check" aria-hidden="true">✓</div>
-      <h1><span class="neon">You're In.</span><br><span class="goldtxt">Welcome To VIP</span></h1>
+      <h1>You're in.<br><span class="grad">Welcome to VIP.</span></h1>
       <p class="lead">Thanks for joining Warlock Winners. Your order is complete. <strong>One step left:</strong> join the private Telegram channel where the picks are posted.</p>
       <!-- Fallback (no JS, no receipt, or join service down): email support. The script below swaps in a direct one-person Telegram link. -->
       <a id="join" class="btn btn-big" href="mailto:BettingSzn@warlockwinners.com?subject=VIP%20Telegram%20invite">Email Us For Your Invite</a>
@@ -93,17 +100,17 @@
     <ol class="steps">
       <li>
         <div class="n" aria-hidden="true">01</div>
-        <div><h2>Turn On Notifications</h2>
+        <div><h2>Turn on notifications</h2>
           <p>In the channel, tap the channel name, then <strong>Notifications → On</strong>. Picks drop before the lines move.</p></div>
       </li>
       <li>
         <div class="n" aria-hidden="true">02</div>
-        <div><h2>Read The Pinned Post</h2>
+        <div><h2>Read the pinned post</h2>
           <p>Our <strong>unit system and bankroll plan</strong>: size every bet in units and never chase.</p></div>
       </li>
       <li>
         <div class="n" aria-hidden="true">03</div>
-        <div><h2>Keep Your Receipt</h2>
+        <div><h2>Keep your receipt</h2>
           <p>Whop emailed your <strong>order confirmation</strong>. It also has a link back to your membership if you ever need it.</p></div>
       </li>
     </ol>
