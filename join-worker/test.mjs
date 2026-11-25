@@ -14,7 +14,7 @@ const KV = {
 const env = { KV, WHOP_API_KEY: 'k', TELEGRAM_BOT_TOKEN: 't', TELEGRAM_CHANNEL_ID: '-100', ALLOWED_ORIGIN: 'https://warlockwinners.com' };
 
 const payments = { pay_good: { id: 'pay_good', membership: { id: 'mem_1' } }, pay_lapsed: { id: 'pay_lapsed', membership: { id: 'mem_2' } } };
-const memberships = { mem_1: { status: 'active' }, mem_2: { status: 'expired' } };
+const memberships = { mem_1: { status: 'active' }, mem_2: { status: 'expired' }, mem_3: { status: 'active' } };
 let updates = [], calls = [], whopDown = false, links = 0;
 
 globalThis.fetch = async (url, opts = {}) => {
@@ -22,6 +22,11 @@ globalThis.fetch = async (url, opts = {}) => {
   if (url.startsWith('https://api.whop.com/api/v1/')) {
     assert.equal(opts.headers.Authorization, 'Bearer k');
     if (whopDown) return res({}, 500);
+    if (url.includes('/members?query=')) {
+      const q = decodeURIComponent(url.split('query=')[1]);
+      return res({ data: q === 'fan@example.com' ? [{ id: 'mber_9', user: { email: 'Fan@Example.com' } }, { id: 'mber_x', user: { email: 'fan@example.com.au' } }] : [] });
+    }
+    if (url.includes('/memberships?member_id=')) return res({ data: url.endsWith('mber_9') ? [{ id: 'mem_old', status: 'expired' }, { id: 'mem_3', status: 'active' }] : [] });
     const [, kind, id] = url.replace('https://api.whop.com/api/v1/', '/').split('/');
     const obj = (kind === 'payments' ? payments : memberships)[id];
     return obj ? res(obj) : res({}, 404);
@@ -80,4 +85,15 @@ assert.ok(!kv.has('m:mem_1'));
 
 // and their old receipt can't mint a new link
 assert.deepEqual((await get('receipt_id=pay_good')).slice(0, 2), [403, { error: 'inactive' }]);
+// email fallback (no receipt in the redirect): exact, case-insensitive match; picks the active membership
+calls = [];
+let [st, bd] = await get('email=' + encodeURIComponent(' FAN@example.com '));
+assert.equal(st, 200); assert.ok(bd.link);
+assert.equal(calls.find((c) => c[0] === 'createChatInviteLink')[1].name, 'mem_3');
+assert.deepEqual((await get('email=fan@example.com'))[1], bd, 'reload returns same link');
+assert.deepEqual((await get('email=nobody@example.com')).slice(0, 2), [404, { error: 'no_member' }]);
+assert.equal((await get('email=not-an-email'))[0], 400);
+assert.equal((await get(''))[0], 400);
+let last; for (let i = 0; i < 8; i++) last = await get('email=nobody@example.com');
+assert.deepEqual(last.slice(0, 2), [429, { error: 'too_many_tries' }], 'email lookups are rate limited');
 console.log('ok');

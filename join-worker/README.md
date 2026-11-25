@@ -1,6 +1,6 @@
 # One-click Telegram join
 
-After a buyer pays on Whop, they land on `warlockwinners.com/welcome.html?receipt_id=pay_...`. The page sends that receipt to this small Cloudflare Worker. The worker checks with Whop that the payment is real and the membership is active, then returns a Telegram invite link that works **for one person, once, for 24 hours**. The buyer taps **Open Telegram & Join** and they're in.
+After a buyer pays on Whop, they land on `warlockwinners.com/welcome.html?receipt_id=pay_...` (or `?payment_id=`). If the receipt is missing, the page asks for their checkout email instead. The page sends that receipt to this small Cloudflare Worker. The worker checks with Whop that the payment is real and the membership is active, then returns a Telegram invite link that works **for one person, once, for 24 hours**. The buyer taps **Open Telegram & Join** and they're in.
 
 Every hour the worker:
 - notes who joined with which link, and
@@ -16,7 +16,8 @@ Use a **new** bot, not @bettingSznbot. Both read the same feed of join events, a
 2. Add the new bot to the VIP channel as an **admin** with **Invite users via link** and **Ban users** turned on.
 
 ### 2. A Whop API key
-In your Whop dashboard, find **Developer** (or **Settings → API keys**). Create a company API key that can **read payments** and **read memberships**, and copy it.
+In your Whop dashboard, find **Developer** (or **Settings → API keys**). Create a **Custom** key with read access to **payments**, **memberships**, **members** and **member emails**, and copy it.
+Member and member-email read power the email fallback: when a checkout redirect arrives without a receipt (seen with phone and in-app checkouts), the welcome page asks for the buyer's checkout email and the worker looks up their active membership. Without email read, Whop hides emails and that lookup finds nobody. Email lookups are limited to 10 per hour per visitor.
 
 ### 3. The Cloudflare Worker (free plan)
 1. Sign up at dash.cloudflare.com.
