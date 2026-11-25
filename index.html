@@ -129,6 +129,7 @@
     .fine { color: var(--muted); font-size: .85rem; text-align: center; margin: 20px auto 0; max-width: 760px; }
 
     /* packages */
+    .star { color: var(--gold); text-shadow: 0 0 12px rgba(245,196,81,.55); }
     .founding { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 8px 16px; border-radius: 99px; font-size: .9rem; font-weight: 500;
       color: var(--gold); background: rgba(245,196,81,.08); border: 1px solid rgba(245,196,81,.25); }
     .plans { grid-template-columns: repeat(4, 1fr); align-items: stretch; }
@@ -297,7 +298,7 @@
           <span class="kicker">Packages</span>
           <h2>Pick your seat at the table.</h2>
           <p class="sub">Every pass includes every sport we handicap: NFL, NCAA, NHL, NBA, MLB and combat sports.</p>
-          <p class="founding">★ Founding member pricing: keep these prices for as long as you stay subscribed.</p>
+          <p class="founding"><span class="star" aria-hidden="true">★</span> Founding member price locked on Weekly &amp; Monthly while you stay subscribed.</p>
         </div>
         <!-- All buttons go to the Whop product page, where buyers pick a plan. Swap in per-plan checkout links (whop.com/checkout/plan_...) to skip that step. -->
         <div class="grid plans">
@@ -309,7 +310,7 @@
             <a class="btn btn-ghost" href="https://whop.com/warlock-winners/warlock-winners-vip">Get today</a>
           </div>
           <div class="card plan reveal" style="--d:1">
-            <h3>Weekly Pass</h3>
+            <h3>Weekly Pass <span class="star" title="Founding member price" aria-label="Founding member price">★</span></h3>
             <div class="price">$19.99 <small>/ week</small></div>
             <span class="renew auto">↻ Auto-renews weekly</span>
             <ul><li>Every pick for 7 days</li><li>All sports included</li><li>Full breakdowns</li></ul>
@@ -317,7 +318,7 @@
           </div>
           <div class="card plan featured reveal" style="--d:2">
             <div class="badge">Most popular</div>
-            <h3>Monthly Pass</h3>
+            <h3>Monthly Pass <span class="star" title="Founding member price" aria-label="Founding member price">★</span></h3>
             <div class="price">$39.99 <small>/ month</small></div>
             <span class="renew auto">↻ Auto-renews monthly</span>
             <ul><li>Every pick, every day</li><li>All sports included</li><li>Full breakdowns</li><li>Bankroll plan</li></ul>
