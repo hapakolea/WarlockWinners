@@ -16,7 +16,7 @@ Use a **new** bot, not @bettingSznbot. Both read the same feed of join events, a
 2. Add the new bot to the VIP channel as an **admin** with **Invite users via link** and **Ban users** turned on.
 
 ### 2. A Whop API key
-In your Whop dashboard, find **Developer** (or **Settings → API keys**). Create a **Custom** key with read access to **payments**, **memberships**, **members** and **member emails**, and copy it.
+In your Whop dashboard, find **Developer** (or **Settings → API keys**). Create a **Custom** key with read access to **payments**, **memberships**, **members**, **member emails** and **member phone** (Whop's member search lists all three member permissions), and copy it.
 Member and member-email read power the email fallback: when a checkout redirect arrives without a receipt (seen with phone and in-app checkouts), the welcome page asks for the buyer's checkout email and the worker looks up their active membership. Without email read, Whop hides emails and that lookup finds nobody. Email lookups are limited to 10 per hour per visitor.
 
 ### 3. The Cloudflare Worker (free plan)
@@ -33,6 +33,7 @@ Member and member-email read power the email fallback: when a checkout redirect 
    | `ALLOWED_ORIGIN` | Text | `https://warlockwinners.com` |
    | `TELEGRAM_BOT_TOKEN` | **Secret** | the new bot's token |
    | `WHOP_API_KEY` | **Secret** | the Whop key |
+   | `WHOP_COMPANY_ID` | Text | your Whop business ID, starts with `biz_` (in the Whop dashboard URL); used by the email lookup |
 
 7. In **Settings → Triggers → Cron Triggers**, add `0 * * * *` (every hour).
 8. Copy the worker's address. It looks like `https://warlock-join.<your-name>.workers.dev`.

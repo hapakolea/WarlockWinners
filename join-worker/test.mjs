@@ -85,6 +85,12 @@ assert.ok(!kv.has('m:mem_1'));
 
 // and their old receipt can't mint a new link
 assert.deepEqual((await get('receipt_id=pay_good')).slice(0, 2), [403, { error: 'inactive' }]);
+// a Whop failure names the call and status, without the email
+whopDown = true;
+let [es, eb] = await get('email=secret.person@example.com');
+assert.equal(es, 500); assert.equal(eb.detail, 'whop /members 500'); assert.ok(!JSON.stringify(eb).includes('secret.person'));
+whopDown = false;
+kv.forEach((_, k) => k.startsWith('rl:') && kv.delete(k));
 // email fallback (no receipt in the redirect): exact, case-insensitive match; picks the active membership
 calls = [];
 let [st, bd] = await get('email=' + encodeURIComponent(' FAN@example.com '));
