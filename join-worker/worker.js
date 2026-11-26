@@ -4,7 +4,7 @@
 // GET /join?email=you@x.com      -> fallback when the checkout redirect carried no receipt: finds an active member by email
 // hourly cron                   -> records who joined with which link, removes members whose Whop membership ended
 //
-// Env: WHOP_API_KEY, TELEGRAM_BOT_TOKEN (secrets), TELEGRAM_CHANNEL_ID, ALLOWED_ORIGIN (vars), KV (KV namespace)
+// Env: WHOP_API_KEY, TELEGRAM_BOT_TOKEN (secrets), TELEGRAM_CHANNEL_ID, ALLOWED_ORIGIN, WHOP_COMPANY_ID (vars), KV (KV namespace)
 
 // shortcut: Whop's status list as documented; confirm against a real membership during the first test purchase
 const VALID = ['active', 'trialing', 'canceling', 'completed'];
@@ -32,7 +32,8 @@ export default {
       return new Response(JSON.stringify(await join(env, `e:${email}`, () => memFromEmail(env, email))), { headers });
     } catch (e) {
       console.log('join failed', who, e.message);
-      return new Response(JSON.stringify({ error: e.code || 'server_error' }), { status: e.status || 500, headers });
+      // detail names the failing call and HTTP status (never secrets) so problems can be read straight off the browser.
+      return new Response(JSON.stringify({ error: e.code || 'server_error', ...(e.code ? {} : { detail: e.message.slice(0, 120) }) }), { status: e.status || 500, headers });
     }
   },
   async scheduled(_event, env, ctx) {
@@ -47,7 +48,10 @@ function fail(code, status) {
 async function whop(env, path) {
   const r = await fetch(`https://api.whop.com/api/v1${path}`, { headers: { Authorization: `Bearer ${env.WHOP_API_KEY}` } });
   if (r.status === 404) return null;
-  if (!r.ok) throw new Error(`whop ${path} ${r.status}`);
+  if (!r.ok) {
+    console.log('whop error', path.split('?')[0], r.status, (await r.text()).slice(0, 300));
+    throw new Error(`whop ${path.split('?')[0]} ${r.status}`); // no query string: keeps emails out of responses
+  }
   return r.json();
 }
 
@@ -75,7 +79,9 @@ const list = (res) => (Array.isArray(res) ? res : res?.data || []);
 
 async function memFromEmail(env, email) {
   // Needs a Whop key with member read + member email read; otherwise Whop hides emails and nothing matches.
-  const members = list(await whop(env, `/members?query=${encodeURIComponent(email)}`));
+  // Whop's member search takes the business ID as account_id (WHOP_COMPANY_ID, starts with biz_).
+  const acct = env.WHOP_COMPANY_ID ? `&account_id=${encodeURIComponent(env.WHOP_COMPANY_ID)}` : '';
+  const members = list(await whop(env, `/members?query=${encodeURIComponent(email)}${acct}`));
   const member = members.find((m) => [m.email, m.user?.email].some((e) => (e || '').toLowerCase() === email));
   if (!member) throw fail('no_member', 404);
   const ms = list(await whop(env, `/memberships?member_id=${encodeURIComponent(member.id)}`));
